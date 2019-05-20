@@ -6,9 +6,9 @@
 # as part of this package.
 
 '''This module provides functions for assembly of sequences by homologous 
-recombination and other related techniques. Given a list of sequences 
-(Dseqrecords), all sequences are analyzed for shared homology longer than the 
-set limit.
+recombination and other related techniques such ad Gibson assembly. 
+Given a list of sequences (Dseqrecords), all sequences are analyzed for 
+shared homology longer than a set limit.
 
 A graph is constructed where each overlapping region form a node and
 sequences separating the overlapping regions form edges.
@@ -76,11 +76,7 @@ class _Memoize(type):
 
 
 class Assembly(object, metaclass = _Memoize):
-    '''Assembly of a list of linear DNA fragments into linear or circular constructs.
-    The Assembly is meant to replace the Assembly method as it is easier to use.
-    Accepts a list of Dseqrecords (source fragments) to initiate an Assembly object.
-    Several methods are available for analysis of overlapping sequences, graph construction
-    and assembly.
+    '''Construction of a Graph from a list of linear DNA fragments.
 
     Parameters
     ----------
@@ -122,8 +118,8 @@ class Assembly(object, metaclass = _Memoize):
     
     def __init__(self, frags=None,  limit = 25, algorithm=common_sub_strings, **attr):
         
-        # Fragments is a string subclass with some extra properties
-        # The order of the fragments has significance
+        # Fragments is a list of dicts
+        # The order of the fragments has significance for the assembly
         fragments=[]
         for f in frags:
             fragments.append( { "upper":str(f.seq).upper(), 
@@ -145,7 +141,7 @@ class Assembly(object, metaclass = _Memoize):
                    "begin_rc":"end_rc",
                    "end_rc":"begin_rc"}
         
-        # all cominations of fragments are compared.
+        # all combinations of fragments are compared.
         # see https://docs.python.org/3.6/library/itertools.html
         # itertools.combinations('ABCD', 2)-->  AB AC AD BC BD CD
         for first, secnd in _itertools.combinations(fragments, 2):  
@@ -240,7 +236,16 @@ class Assembly(object, metaclass = _Memoize):
         
 
     def assemble_linear(self, start=None,end=None, max_nodes=None):
+        """This method yields all linear pathways betwen the start and the end 
+        fragments (default are first and last sequences in the iterable given 
+        as argument to the Assembly class.
         
+        The optional argument max_nodes controls the maximum number of nodes allowed in the assembly.
+        This variable is normally set to the number of sequences.
+        
+        
+        
+        """
         G = _nx.MultiDiGraph(self.G)
         
         G.add_nodes_from(["begin","begin_rc","end","end_rc"], length=0)
@@ -393,7 +398,7 @@ class Assembly(object, metaclass = _Memoize):
                                                            max_nodes = self.max_nodes,    
                                                            al        = self.algorithm.__name__))
 
-                                   
+                                # limit = 5   
 example_fragments = ( _Dseqrecord("acgatCAtgctcc",  name ="a"),
                              _Dseqrecord("tgctccTAAattctgc", name ="b"),
                                       _Dseqrecord("attctgcGAGGacgat",name ="c") )
@@ -403,12 +408,17 @@ example_fragments = ( _Dseqrecord("acgatCAtgctcc",  name ="a"),
 example_linear_result =        "acgatCAtgctccTAAattctgcGAGGacgat"
 example_circular_result =      "acgatCAtgctccTAAattctgcGAGG"         
          
-         
+#if __name__=="__main__":
+#    import os as _os
+#    cached = _os.getenv("pydna_cached_funcs", "")
+#    _os.environ["pydna_cached_funcs"]=""
+#    import doctest
+#    doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)
+#    _os.environ["pydna_cached_funcs"]=cached
          
 if __name__=="__main__":
-    import os as _os
-    cached = _os.getenv("pydna_cached_funcs", "")
-    _os.environ["pydna_cached_funcs"]=""
-    import doctest
-    doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)
-    _os.environ["pydna_cached_funcs"]=cached
+    
+    a = Assembly(example_fragments, limit=5)
+    lin = a.assemble_linear()
+    
+    lin[2].detailed_figure()
