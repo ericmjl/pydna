@@ -421,4 +421,4 @@ if __name__=="__main__":
     a = Assembly(example_fragments, limit=5)
     lin = a.assemble_linear()
     
-    lin[2].detailed_figure()
+    lin[1].detailed_figure()
