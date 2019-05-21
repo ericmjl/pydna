@@ -1071,7 +1071,7 @@ class Dseqrecord(_SeqRecord):
         if self.linear:
             raise TypeError("Only circular DNA can be synced!")
 
-        newseq = _copy.copy(self)
+        newseq = Dseqrecord(self) #_copy.copy(self)
 
         s    = str(self.seq.watson).lower()
         s_rc = str(self.seq.crick).lower()

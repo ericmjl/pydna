@@ -252,7 +252,7 @@ class Assembly(object, metaclass = _Memoize):
         
         # add edges from "begin" to nodes in the first sequence in self.fragments
         firstfragment = self.fragments[0]
-        for start, length, node in firstfragment["nodes"]:
+        for start, length, node in firstfragment["nodes"][::-1]:
             G.add_edge("begin", node, 
                             piece  = slice(0, start), 
                             features  = [f for f in firstfragment["features"] if start+length >= f.location.end],
@@ -261,7 +261,7 @@ class Assembly(object, metaclass = _Memoize):
 
         # add edges from "begin_rc" to nodes in the reverse complement of the first sequence
         firstfragmentrc = self.rcfragments[firstfragment["mixed"]]
-        for start, length, node  in firstfragmentrc["nodes"]:
+        for start, length, node  in firstfragmentrc["nodes"][::-1]:
             G.add_edge("begin_rc", node,
                             piece = slice(0, start), 
                             features = [f for f in firstfragmentrc["features"] if start+length >= f.location.end], 
@@ -341,9 +341,8 @@ class Assembly(object, metaclass = _Memoize):
             order, node = min((self.G.node[node]["order"],node) for node in cpath)
             i=cpath.index(node)
             cpaths_sorted.append((order, cpath[i:]+cpath[:i]))
-        cpaths_sorted.sort()        
-
-        for _, cp in cpaths_sorted[::2]:   # cpaths is a list of nodes representing a circular assembly
+        cpaths_sorted.sort()
+        for _, cp in cpaths_sorted: #[::2]:# cpaths is a list of nodes representing a circular assembly
             edgelol = []                   # edgelol is a list of lists of all edges along cp
             cp+= cp[0:1]
             for u,v in zip(cp, cp[1:]):
@@ -404,6 +403,9 @@ example_fragments = ( _Dseqrecord("acgatCAtgctcc",  name ="a"),
                                       _Dseqrecord("attctgcGAGGacgat",name ="c") )
 
 
+fs = ( _Dseqrecord("acgatCAtgcaCCCgtttcc",  name ="a" ),
+       _Dseqrecord("tgcaAAAgtttccacgat",    name ="b" )      )
+
 
 example_linear_result =        "acgatCAtgctccTAAattctgcGAGGacgat"
 example_circular_result =      "acgatCAtgctccTAAattctgcGAGG"         
@@ -418,7 +420,15 @@ example_circular_result =      "acgatCAtgctccTAAattctgcGAGG"
          
 if __name__=="__main__":
     
-    a = Assembly(example_fragments, limit=5)
-    lin = a.assemble_linear()
+#    a = Assembly(example_fragments, limit=5)
+#    lin = a.assemble_linear()
+#    good  = lin[0]
+#    funny = lin[1]
+#    good.detailed_figure()
+#    funny.detailed_figure()
     
-    lin[1].detailed_figure()
+    asm = Assembly(fs, limit=4)
+    a,b,c,d = asm.assemble_circular()
+    
+    
+    #lin = a.assemble_linear()
