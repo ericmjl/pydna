@@ -558,29 +558,34 @@ def parse_text_table(rawtable, tabs=4):
 
     list_of_lists_rc = [list(i) for i in zip(*list_of_lists_cr)]
 
-    formatted = _pretty_str("\n".join(" ".join(cell) for cell in
-                            list_of_lists_rc))
+    formatted = _pretty_str("\n".join(" ".join(cell) for cell in list_of_lists_rc))
 
-    columnsplit = _pretty_str("\n|||\n".join(
-        [
-            "\n".join(
-                [
-                    x.strip()
-                    for x in ["".join(c) for c in zip(*col.strip("\n").splitlines())]
-                ]
-            )
-            for col in cols
-        ]
-    ))
+    columnsplit = _pretty_str(
+        "\n|||\n".join(
+            [
+                "\n".join(
+                    [
+                        x.strip()
+                        for x in [
+                            "".join(c) for c in zip(*col.strip("\n").splitlines())
+                        ]
+                    ]
+                )
+                for col in cols
+            ]
+        )
+    )
 
     rowsplit = "\n---\n".join(["\n".join(a).strip() for a in zip(*list_of_lists_cr)])
     rowsplit = _pretty_str("\n".join(row.strip() for row in rowsplit.splitlines()))
 
-    return (formatted,
-            columnsplit,
-            rowsplit,
-            list_of_lists_rc,
-            list_of_lists_cr,)
+    return (
+        formatted,
+        columnsplit,
+        rowsplit,
+        list_of_lists_rc,
+        list_of_lists_cr,
+    )
 
 
 def join_list_to_table(rawlist):
@@ -673,7 +678,7 @@ def randomRNA(length, maxlength=None):
 
 
 def randomDNA(length, maxlength=None):
-    """ string! """
+    """string!"""
     if maxlength and maxlength > length:
         length = int(round(random.triangular(length, maxlength)))
     return "".join([random.choice("GATC") for x in range(length)])

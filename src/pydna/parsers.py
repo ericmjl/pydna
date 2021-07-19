@@ -68,8 +68,10 @@ def parse(data, ds=True):
 
     def embl_gb_fasta(raw, ds, path=None):
 
-        pattern = (r"(?:>.+\n^(?:^[^>]+?)(?=\n\n|>|"
-                   r"LOCUS|ID))|(?:(?:LOCUS|ID)(?:(?:.|\n)+?)^//)")
+        pattern = (
+            r"(?:>.+\n^(?:^[^>]+?)(?=\n\n|>|"
+            r"LOCUS|ID))|(?:(?:LOCUS|ID)(?:(?:.|\n)+?)^//)"
+        )
 
         result_list = []
 

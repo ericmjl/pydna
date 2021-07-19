@@ -5,7 +5,8 @@ from Bio.SeqRecord import SeqRecord
 sr = SeqRecord(Seq("GATC"))
 
 from Bio.SeqUtils import CheckSum
-'dYoa6Z6T6WtPxu5msRTifUobfm0'
+
+"dYoa6Z6T6WtPxu5msRTifUobfm0"
 CheckSum.seguid(sr.seq)
 
 sr.__str__()
@@ -15,10 +16,6 @@ sr.seq.__repr__()
 from pydna.dseqrecord import Dseqrecord
 
 s = Dseqrecord("GATC")
-
-
-
-
 
 
 from pydna.dseq import Dseq
@@ -33,34 +30,33 @@ from pydna.dseqrecord import Dseqrecord
 fdseqr = Dseqrecord(fdseq)
 rdseqr = Dseqrecord(sdseq)
 
-fdseqr+rdseqr
+fdseqr + rdseqr
 
 fdseqr.seguid()
 from Bio.Restriction import BamHI
+
 fdseq = Dseq.from_string("GGATCC")
 fdseq = Dseq("GGATCC")
 fdseq = Dseq("GGATCC", linear=False)
 fdseq.cut(BamHI)
 
 
-
 from pydna.readers import read
 from pydna.amplify import Anneal
 from pydna.dseqrecord import Dseqrecord
 
-t = Dseqrecord("tacactcaccgtctatcattatcta" +
-               "gatc"*240 +
-               "ctatcgactgtatcatctgatagcac")
+t = Dseqrecord(
+    "tacactcaccgtctatcattatcta" + "gatc" * 240 + "ctatcgactgtatcatctgatagcac"
+)
 
 t.__str__()
 
 
-
-
 from pydna.readers import read
 from Bio.SeqRecord import SeqRecord
-p1 = read(">p1\ntacactcaccgtctatcattatc", ds = False)
-p2 = read(">p2\ngtgctatcagatgatacagtcg", ds = False)
+
+p1 = read(">p1\ntacactcaccgtctatcattatc", ds=False)
+p2 = read(">p2\ngtgctatcagatgatacagtcg", ds=False)
 
 p1.__str__()
 
@@ -76,10 +72,7 @@ amplicon.__str__()
 print(amplicon)
 
 
+from pydna.dseq import Dseq
 
-
-from pydna.dseq  import Dseq 
-s=Dseq("atgtacgatcgtatgctggttatattttag")
+s = Dseq("atgtacgatcgtatgctggttatattttag")
 s.translate()
-
-

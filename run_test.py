@@ -12,14 +12,11 @@ import pytest
 
 def main():
 
-    os.environ["pydna_data_dir"] = tempfile.mkdtemp(
-        prefix="pydna_data_dir_")
+    os.environ["pydna_data_dir"] = tempfile.mkdtemp(prefix="pydna_data_dir_")
 
-    os.environ["pydna_log_dir"] = tempfile.mkdtemp(
-        prefix="pydna_log_dir_")
+    os.environ["pydna_log_dir"] = tempfile.mkdtemp(prefix="pydna_log_dir_")
 
-    os.environ["pydna_config_dir"] = tempfile.mkdtemp(
-        prefix="pydna_config_dir_")
+    os.environ["pydna_config_dir"] = tempfile.mkdtemp(prefix="pydna_config_dir_")
 
     os.environ["pydna_loglevel"] = str(logging.DEBUG)
 

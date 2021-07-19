@@ -108,7 +108,7 @@ def _annealing_positions(primer, template, limit=15):
         length = len(tail)
         results = []
         for match_start in positions:
-            tm = template[match_start + limit: match_start + limit + length]
+            tm = template[match_start + limit : match_start + limit + length]
             footprint = len(
                 list(
                     _itertools.takewhile(
@@ -426,7 +426,7 @@ class Anneal(object, metaclass=_Memoize):
         return self._products
 
     def __repr__(self):
-        """ returns a short string representation """
+        """returns a short string representation"""
         return "Reaction(products = {})".format(
             len(self.forward_primers * len(self.reverse_primers))
         )

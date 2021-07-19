@@ -9,7 +9,7 @@ def test_gel():
 
     from pydna.dseqrecord import Dseqrecord
 
-    mygel = gel([PennStateLadder, [Dseqrecord("A"*2000)]])
+    mygel = gel([PennStateLadder, [Dseqrecord("A" * 2000)]])
 
     from PIL import Image
 

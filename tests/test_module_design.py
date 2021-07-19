@@ -195,7 +195,7 @@ def test_primer_design_one_fragment_flanking_linkers():
 
 
 def test_primer_Design():
-    """ test_primer_design"""
+    """test_primer_design"""
 
     a = Dseqrecord("atgactgctaacccttccttggtgttgaacaagatcgacgacatttcgttcgaaacttacgatg")
     b = Dseqrecord("ccaaacccaccaggtaccttatgtaagtacttcaagtcgccagaagacttcttggtcaagttgcc")
@@ -217,7 +217,7 @@ def test_primer_Design():
 
 
 def test_primer_Design_with_linker():
-    """ test_primer_design"""
+    """test_primer_design"""
 
     b = Dseqrecord("agctactgactattaggggttattctgatcatctgatctactatctgactgtactgatcta")
     l = Dseqrecord("AAATTTCCCGGG")

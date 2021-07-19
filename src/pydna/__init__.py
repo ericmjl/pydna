@@ -153,15 +153,17 @@ _ini_path = _os.path.join(_os.environ["pydna_config_dir"], "pydna.ini")
 _parser = _configparser.ConfigParser()
 
 user_data_dir = _pathlib.Path(_appdirs.user_data_dir("pydna"))
-default_ini = {"loglevel": str(_logging.WARNING),
-               "email": "someone@example.com",
-               "data_dir": user_data_dir,
-               "log_dir": _appdirs.user_log_dir("pydna"),
-               "cached_funcs": "pydna.genbank.genbank.nucleotide",
-               "ape": "put/path/to/ape/here",
-               "primers": user_data_dir/"primers.md",
-               "enzymes": user_data_dir/"enzymes.md",
-               "primersgdoc":"PRIMERS"}
+default_ini = {
+    "loglevel": str(_logging.WARNING),
+    "email": "someone@example.com",
+    "data_dir": user_data_dir,
+    "log_dir": _appdirs.user_log_dir("pydna"),
+    "cached_funcs": "pydna.genbank.genbank.nucleotide",
+    "ape": "put/path/to/ape/here",
+    "primers": user_data_dir / "primers.md",
+    "enzymes": user_data_dir / "enzymes.md",
+    "primersgdoc": "PRIMERS",
+}
 
 # if a pydna.ini exists, it is read
 if _os.path.exists(_ini_path):
@@ -176,7 +178,8 @@ _mainsection = _parser["main"]
 
 for key in default_ini:
     _os.environ[f"pydna_{key}"] = _os.getenv(
-    f"pydna_{key}", _mainsection.get(key, default_ini[key] ))
+        f"pydna_{key}", _mainsection.get(key, default_ini[key])
+    )
 
 # create log directory if not present
 _os.makedirs(_os.environ["pydna_log_dir"], exist_ok=True)  # changes to file system ####
@@ -363,7 +366,7 @@ def get_env():
     from pydna._pretty import pretty_str as _pretty_str
 
     _table = _PrettyTable(["Variable", "Value"])
-    #_table.set_style(_prettytable.DEFAULT)
+    # _table.set_style(_prettytable.DEFAULT)
     _table.align["Variable"] = "l"  # Left align
     _table.align["Value"] = "l"  # Left align
     _table.padding_width = 1  # One space between column edges and contents

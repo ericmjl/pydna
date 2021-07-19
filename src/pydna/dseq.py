@@ -334,12 +334,15 @@ class Dseq(_Seq):
                 sns = (ovhg * " ") + _pretty_str(watson)
                 asn = (-ovhg * " ") + _pretty_str(_rc(crick))
 
-                self._data = bytes("".join(
-                    [
-                        a.strip() or b.strip()
-                        for a, b in _itertools.zip_longest(sns, asn, fillvalue=" ")
-                    ]
-                ), encoding="ASCII")
+                self._data = bytes(
+                    "".join(
+                        [
+                            a.strip() or b.strip()
+                            for a, b in _itertools.zip_longest(sns, asn, fillvalue=" ")
+                        ]
+                    ),
+                    encoding="ASCII",
+                )
 
             else:  # ovhg given
                 if ovhg == 0:
@@ -348,21 +351,28 @@ class Dseq(_Seq):
                     elif len(watson) > len(crick):
                         self._data = bytes(watson, encoding="ASCII")
                     else:
-                        self._data = bytes(watson + _rc(crick[: len(crick) - len(watson)]),encoding="ASCII")
+                        self._data = bytes(
+                            watson + _rc(crick[: len(crick) - len(watson)]),
+                            encoding="ASCII",
+                        )
                 elif ovhg > 0:
                     if ovhg + len(watson) > len(crick):
-                        self._data = bytes(_rc(crick[-ovhg:]) + watson, encoding="ASCII")
+                        self._data = bytes(
+                            _rc(crick[-ovhg:]) + watson, encoding="ASCII"
+                        )
                     else:
                         self._data = bytes(
                             _rc(crick[-ovhg:])
                             + watson
-                            + _rc(crick[: len(crick) - ovhg - len(watson)]), 
-                            encoding="ASCII")
+                            + _rc(crick[: len(crick) - ovhg - len(watson)]),
+                            encoding="ASCII",
+                        )
                 else:  # ovhg < 0
                     if -ovhg + len(crick) > len(watson):
-                        self._data = bytes(watson + _rc(
-                            crick[: -ovhg + len(crick) - len(watson)]
-                        ), encoding="ASCII")
+                        self._data = bytes(
+                            watson + _rc(crick[: -ovhg + len(crick) - len(watson)]),
+                            encoding="ASCII",
+                        )
                     else:
                         self._data = bytes(watson, encoding="ASCII")
 
@@ -397,7 +407,8 @@ class Dseq(_Seq):
         obj._data = (
             _rc(cb[-max(0, ovhg) or len(cb) :])
             + wb
-            + _rc(cb[: max(0, len(cb) - ovhg - len(wb))]))
+            + _rc(cb[: max(0, len(cb) - ovhg - len(wb))])
+        )
         # obj.alphabet = _generic_dna
         return obj
 
@@ -444,13 +455,14 @@ class Dseq(_Seq):
         """
         nts = (self.watson + self.crick).lower()
 
-        return ( 313.2 * nts.count("a") +
-                 304.2 * nts.count("t") +
-                 289.2 * nts.count("c") +
-                 329.2 * nts.count("g") +
-                 308.9 * nts.count("n") +
-                 79.0 )
-
+        return (
+            313.2 * nts.count("a")
+            + 304.2 * nts.count("t")
+            + 289.2 * nts.count("c")
+            + 329.2 * nts.count("g")
+            + 308.9 * nts.count("n")
+            + 79.0
+        )
 
     def upper(self):
         """Return an upper case copy of the sequence.
@@ -968,9 +980,7 @@ class Dseq(_Seq):
 
         if self_type == other_type and str(self_tail) == str(_rc(other_tail)):
             answer = Dseq.quick(
-                self.watson + other.watson,
-                other.crick + self.crick,
-                self._ovhg
+                self.watson + other.watson, other.crick + self.crick, self._ovhg
             )
         elif not self:
             answer = _copy.copy(other)
@@ -1079,12 +1089,13 @@ class Dseq(_Seq):
         crick, ovhg = self._fill_in_five_prime(nucleotides)
         watson = self._fill_in_three_prime(nucleotides)
         return Dseq(watson, crick, ovhg)
-    
-    def translate(self, table="Standard", stop_symbol="*", 
-                  to_stop=False, cds=False, gap="-"):
-        return _Seq(_translate_str(str(self), table, stop_symbol, to_stop, cds, gap=gap))
-        
-        
+
+    def translate(
+        self, table="Standard", stop_symbol="*", to_stop=False, cds=False, gap="-"
+    ):
+        return _Seq(
+            _translate_str(str(self), table, stop_symbol, to_stop, cds, gap=gap)
+        )
 
     def mung(self):
         """
@@ -1355,7 +1366,9 @@ class Dseq(_Seq):
         if self.linear:
             dsseq = self.mung()
         else:
-            dsseq = Dseq.from_string(self._data.decode("ASCII"), linear=True, circular=False)
+            dsseq = Dseq.from_string(
+                self._data.decode("ASCII"), linear=True, circular=False
+            )
 
         if len(enzymes) == 1 and hasattr(
             enzymes[0], "intersection"
@@ -1460,21 +1473,22 @@ class Dseq(_Seq):
 
         return tuple(frags)
 
-
-    def cas9(self, RNA:str):
+    def cas9(self, RNA: str):
         """docstring."""
-        cuts=[0]
+        cuts = [0]
         for m in _re.finditer(RNA, self._data):
-            cuts.append(m.start()+17)
+            cuts.append(m.start() + 17)
         cuts.append(self.length)
         fragments = []
-        for x,y in zip(cuts,cuts[1:]):
+        for x, y in zip(cuts, cuts[1:]):
             fragments.append(self[x:y])
         return fragments
 
     def orfs(self):
         orf = "ATG(?:...){15,}?(?:TAG|TAA|TGA)"
-        match = _regex.findall(orf, self._data, flags=_regex.IGNORECASE, overlapped=True)
+        match = _regex.findall(
+            orf, self._data, flags=_regex.IGNORECASE, overlapped=True
+        )
         match.sort(key=len, reverse=True)
         return [Dseq(m) for m in match]
 

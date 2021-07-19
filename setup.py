@@ -61,7 +61,7 @@ setup(
         "pyparsing",
         "requests",
         "CAI",
-        "regex"
+        "regex",
     ],
     keywords="bioinformatics",
     classifiers=[

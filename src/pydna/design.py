@@ -120,7 +120,7 @@ def primer_design(
     """
 
     def design(target_tm, template):
-        """ returns a string """
+        """returns a string"""
         tmp = 0
         length = limit
         p = str(template.seq[:length])
@@ -630,34 +630,43 @@ def assembly_fragments(f, overlap=35, maxlink=40):
                 )
 
                 first.reverse_primer = (
-                    secnd.seq.reverse_complement()._data.decode("ASCII")[secnd_len // 2 :]
+                    secnd.seq.reverse_complement()._data.decode("ASCII")[
+                        secnd_len // 2 :
+                    ]
                     + first.reverse_primer
                 )
                 third.forward_primer = (
-                    secnd.seq._data.decode("ASCII")[secnd_len // 2 :] + third.forward_primer
+                    secnd.seq._data.decode("ASCII")[secnd_len // 2 :]
+                    + third.forward_primer
                 )
 
                 lnk = (
                     third.seq.reverse_complement()._data.decode("ASCII")
-                    + secnd.reverse_complement().seq._data.decode("ASCII")[: secnd_len // 2]
+                    + secnd.reverse_complement().seq._data.decode("ASCII")[
+                        : secnd_len // 2
+                    ]
                 )[-tail_length:]
                 _module_logger.debug("1 %s", lnk)
                 first.reverse_primer = lnk + first.reverse_primer
 
-                lnk = (first.seq._data.decode("ASCII") + secnd.seq._data.decode("ASCII")[: secnd_len // 2])[
-                    -tail_length:
-                ]
+                lnk = (
+                    first.seq._data.decode("ASCII")
+                    + secnd.seq._data.decode("ASCII")[: secnd_len // 2]
+                )[-tail_length:]
                 _module_logger.debug("2 %s", lnk)
                 third.forward_primer = lnk + third.forward_primer
 
             elif hasattr(first, "template"):
                 first.reverse_primer = (
-                    secnd.seq.reverse_complement()._data.decode("ASCII") + first.reverse_primer
+                    secnd.seq.reverse_complement()._data.decode("ASCII")
+                    + first.reverse_primer
                 )
                 lnk = str(third.seq[:overlap].reverse_complement())
                 first.reverse_primer = lnk + first.reverse_primer
             elif hasattr(third, "template"):
-                third.forward_primer = secnd.seq._data.decode("ASCII") + third.forward_primer
+                third.forward_primer = (
+                    secnd.seq._data.decode("ASCII") + third.forward_primer
+                )
                 lnk = str(first.seq[-overlap:])
                 third.forward_primer = lnk + third.forward_primer
             secnd = empty
