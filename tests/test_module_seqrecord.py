@@ -152,10 +152,12 @@ def test_lcs():
             "ApEinfo_revcolor": ["#DFFDFF"],
         },
     }
-    assert s.lcs("GGATCC").__dict__ == {'location': None,
-                                         'type': '',
-                                         'id': '<unknown id>',
-                                         'qualifiers': OrderedDict() }
+    assert s.lcs("GGATCC").__dict__ == {
+        "location": None,
+        "type": "",
+        "id": "<unknown id>",
+        "qualifiers": OrderedDict(),
+    }
     assert s.lcs("GGATCC", limit=4).__dict__ == expected.__dict__
     assert s.lcs(Seq("GGATCC"), limit=4).__dict__ == expected.__dict__
     assert (
@@ -171,8 +173,6 @@ def test_lcs():
         s.lcs(Dseqrecord("GGATCC", name="sequence"), limit=4).__dict__
         == expected.__dict__
     )
-
-
 
 
 def test_format():

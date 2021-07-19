@@ -39,8 +39,11 @@ _module_logger = _logging.getLogger("pydna." + __name__)
 try:
     from IPython.display import display as _display
 except ImportError:
+
     def _display_html(item, raw=None):
         return item
+
+
 else:
     from IPython.display import display_html as _display_html
 
@@ -129,7 +132,7 @@ class Dseqrecord(_SeqRecord):
         linear=None,
         circular=None,
         n=5e-14,  # mol ( = 0.05 pmol)
-        **kwargs
+        **kwargs,
     ):
 
         _module_logger.info("### Dseqrecord initialized ###")
@@ -582,8 +585,8 @@ class Dseqrecord(_SeqRecord):
             else:
                 with open(filename, "w") as fp:
                     fp.write(self.format(f))
-        #from IPython.display import display_markdown
-        #return display_markdown("[link](ling.gb)",raw=True)
+        # from IPython.display import display_markdown
+        # return display_markdown("[link](ling.gb)",raw=True)
         return _display_html(msg, raw=True)
 
     def find(self, other):
@@ -855,7 +858,7 @@ class Dseqrecord(_SeqRecord):
         return fragments[0]
 
     def no_cutters(self, batch=CommOnly):
-        """See """
+        """See"""
         return self.seq.no_cutters(batch=batch)
 
     def unique_cutters(self, batch=CommOnly):
@@ -946,21 +949,19 @@ class Dseqrecord(_SeqRecord):
             [len(enzyme.search(self.seq)) for enzyme in _flatten(enzymes)]
         )  # flatten
 
-
-    def cas9(self, RNA:str):
+    def cas9(self, RNA: str):
         """docstring."""
         frags = []
         for target in (self.seq._data, self.seq.rc()._data):
-            cuts=[0]
+            cuts = [0]
             for m in _re.finditer(RNA, target):
-                cuts.append(m.start()+17)
+                cuts.append(m.start() + 17)
             cuts.append(self.seq.length)
             fragments = []
-            for x,y in zip(cuts,cuts[1:]):
+            for x, y in zip(cuts, cuts[1:]):
                 fragments.append(self[x:y])
             frags.append(fragments)
         return frags
-
 
     def reverse_complement(self):
         """Returns the reverse complement.
@@ -1291,7 +1292,9 @@ class Dseqrecord(_SeqRecord):
         return lower
 
     def orfs(self, minsize=30):
-        orf = _re.compile(f"ATG(?:...){{{minsize},}}?(?:TAG|TAA|TGA)", flags=_re.IGNORECASE)
+        orf = _re.compile(
+            f"ATG(?:...){{{minsize},}}?(?:TAG|TAA|TGA)", flags=_re.IGNORECASE
+        )
         start = 0
         matches = []
         s = self.seq._data
@@ -1299,10 +1302,11 @@ class Dseqrecord(_SeqRecord):
             match = orf.search(s, pos=start)
             if match:
                 matches.append(slice(match.start(), match.end()))
-                start=start + match.start() + 1
+                start = start + match.start() + 1
             else:
                 break
         return sorted([self[sl] for sl in matches], key=len, reverse=True)
+
 
 if __name__ == "__main__":
     cache = _os.getenv("pydna_cache")

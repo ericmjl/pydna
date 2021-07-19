@@ -7,8 +7,7 @@ import pytest
 def test_drive(monkeypatch):
 
     from pydrive2.auth import GoogleAuth as _GoogleAuth
-    from pydrive2.auth import (ServiceAccountCredentials
-                               as _ServiceAccountCredentials)
+    from pydrive2.auth import ServiceAccountCredentials as _ServiceAccountCredentials
     from pydrive2.drive import GoogleDrive as _GoogleDrive
 
     from unittest.mock import MagicMock, PropertyMock, seal
@@ -23,12 +22,9 @@ def test_drive(monkeypatch):
 
     mock_GA.credentials = ""
 
-    monkeypatch.setattr("pydna.myprimers_gdoc._GoogleAuth",
-                        mock_GA)
-    monkeypatch.setattr("pydna.myprimers_gdoc._GoogleDrive",
-                        mock_GD)
-    monkeypatch.setattr("pydna.myprimers_gdoc._ServiceAccountCredentials",
-                        mock_SAC)
+    monkeypatch.setattr("pydna.myprimers_gdoc._GoogleAuth", mock_GA)
+    monkeypatch.setattr("pydna.myprimers_gdoc._GoogleDrive", mock_GD)
+    monkeypatch.setattr("pydna.myprimers_gdoc._ServiceAccountCredentials", mock_SAC)
 
     from pydna import myprimers_gdoc
 
@@ -43,14 +39,11 @@ def test_drive(monkeypatch):
     import os
     from pathlib import Path
 
-    pth = Path(os.getenv("pydna_config_dir"))/"service_account.json"
+    pth = Path(os.getenv("pydna_config_dir")) / "service_account.json"
 
-    call = (str(pth),
-            ['https://www.googleapis.com/auth/drive'])
+    call = (str(pth), ["https://www.googleapis.com/auth/drive"])
 
     mock_SAC.from_json_keyfile_name.assert_called_with(*call)
-
-
 
 
 if __name__ == "__main__":

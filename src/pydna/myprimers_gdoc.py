@@ -10,16 +10,17 @@ You need pydrive2 ( https://github.com/iterative/PyDrive2 ).
 """
 import os as _os
 from pydrive2.auth import GoogleAuth as _GoogleAuth
-from pydrive2.auth import (ServiceAccountCredentials
-                           as _ServiceAccountCredentials)
+from pydrive2.auth import ServiceAccountCredentials as _ServiceAccountCredentials
 from pydrive2.drive import GoogleDrive as _GoogleDrive
 from pydna.parsers import parse_primers as _parse_primers
 
 
-def get_primer_list_from_gdoc(title=_os.environ["pydna_primersgdoc"],
-                              mime="application/vnd.google-apps.document",
-                              dir_=_os.environ["pydna_config_dir"],
-                              jsonfn="service_account.json"):
+def get_primer_list_from_gdoc(
+    title=_os.environ["pydna_primersgdoc"],
+    mime="application/vnd.google-apps.document",
+    dir_=_os.environ["pydna_config_dir"],
+    jsonfn="service_account.json",
+):
     """Assumes that a google service account is used.
 
     See instructions at the docs for gdrive
@@ -32,15 +33,18 @@ def get_primer_list_from_gdoc(title=_os.environ["pydna_primersgdoc"],
 
     """
     JSON_FILE = _os.path.join(dir_, jsonfn)
-    scope = ['https://www.googleapis.com/auth/drive']
+    scope = ["https://www.googleapis.com/auth/drive"]
     gauth = _GoogleAuth()
-    gauth.credentials = (_ServiceAccountCredentials
-                         .from_json_keyfile_name(JSON_FILE,
-                                                 scope))
-    gauth.auth_method = 'service'
+    gauth.credentials = _ServiceAccountCredentials.from_json_keyfile_name(
+        JSON_FILE, scope
+    )
+    gauth.auth_method = "service"
 
-    fl = _GoogleDrive(gauth).ListFile(
-        {'q': f"title = '{title}' and mimeType='{mime}'"}).GetList()
+    fl = (
+        _GoogleDrive(gauth)
+        .ListFile({"q": f"title = '{title}' and mimeType='{mime}'"})
+        .GetList()
+    )
 
     content = fl.pop(0).GetContentString(mimetype="text/plain")
 
@@ -56,5 +60,6 @@ if __name__ == "__main__":
     cache = _os.getenv("pydna_cache")
     _os.environ["pydna_cache"] = "nocache"
     import doctest
+
     doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)
     _os.environ["pydna_cache"] = str(cache)

@@ -37,7 +37,7 @@ def test_IPython_missing(monkeypatch):
     from pydna import dseqrecord
 
     assert dseqrecord._display_html("item") == "item"
-    #assert dseqrecord._HTML("item") == "item"
+    # assert dseqrecord._HTML("item") == "item"
 
 
 def test_initialization():
@@ -423,8 +423,9 @@ def test_revcomp():
 
 def test_m():
     from pydna.dseqrecord import Dseqrecord
+
     s = Dseqrecord("A" * 5000)
-    assert f'{s.m():.3e}' == '1.544e-07'
+    assert f"{s.m():.3e}" == "1.544e-07"
 
 
 def test_extract_feature():

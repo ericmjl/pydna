@@ -106,9 +106,9 @@ class SeqRecord(_SeqRecord):
         if len(value) > 16:
             shortvalue = value[:16]
             _warn(
-                ("locus property {} truncated"
-                 "to 16 chars {}").format(value,
-                                          shortvalue),
+                ("locus property {} truncated" "to 16 chars {}").format(
+                    value, shortvalue
+                ),
                 _PydnaWarning,
                 stacklevel=2,
             )
@@ -237,8 +237,8 @@ class SeqRecord(_SeqRecord):
             f.qualifiers["ApEinfo_revcolor"] = [cols[::-1][i % len(cols)]]
 
     def add_feature(
-        self, x=None, y=None, seq=None,
-            type="misc", strand=1, *args, **kwargs):
+        self, x=None, y=None, seq=None, type="misc", strand=1, *args, **kwargs
+    ):
         """Add a feature of type misc to the feature list of the sequence.
 
         Parameters
@@ -286,9 +286,7 @@ class SeqRecord(_SeqRecord):
                 qualifiers["label"] = ["orf{}".format(y - x)]
 
         sf = _SeqFeature(
-            _FeatureLocation(x, y, strand=strand),
-            type=type,
-            qualifiers=qualifiers
+            _FeatureLocation(x, y, strand=strand), type=type, qualifiers=qualifiers
         )
 
         self.features.append(sf)
@@ -324,8 +322,7 @@ class SeqRecord(_SeqRecord):
         +-----+---------------+-----+-----+-----+-----+------+------+
         """
         x = _PrettyTable(
-            ["Ft#", "Label or Note", "Dir",
-             "Sta", "End", "Len", "type", "orf?"]
+            ["Ft#", "Label or Note", "Dir", "Sta", "End", "Len", "type", "orf?"]
         )
         x.align["Ft#"] = "r"  # Left align
         x.align["Label or Note"] = "l"  # Left align
@@ -442,8 +439,7 @@ class SeqRecord(_SeqRecord):
 
         if (not blunt) and linear:
             return _pretty_str(
-                "Sequence is not blunt nor circular,"
-                " so it can not be stamped."
+                "Sequence is not blunt nor circular," " so it can not be stamped."
             )
 
         algorithm = {True: "SEGUID", False: "cSEGUID"}[linear]
@@ -458,8 +454,7 @@ class SeqRecord(_SeqRecord):
                 return newstamp
             else:
                 raise ValueError(
-                    "Stamp is wrong.\n"
-                    f"Old: {old_stamp}\n" f"New: {newstamp}"
+                    "Stamp is wrong.\n" f"Old: {old_stamp}\n" f"New: {newstamp}"
                 )
         else:
             newstamp = "{}_{}".format(algorithm, chksum)
@@ -525,9 +520,7 @@ class SeqRecord(_SeqRecord):
         else:
             r = str(other.lower())
 
-        olaps = _common_sub_strings(str(self.seq).lower(),
-                                    r,
-                                    limit=limit or 25)
+        olaps = _common_sub_strings(str(self.seq).lower(), r, limit=limit or 25)
 
         try:
             start_in_self, start_in_other, length = olaps.pop(0)
@@ -547,29 +540,30 @@ class SeqRecord(_SeqRecord):
             )
         return result
 
-
     def gc(self):
         """Return GC content."""
-        return round(_GC(str(self.seq))/100.0, 3)
+        return round(_GC(str(self.seq)) / 100.0, 3)
 
     def cai(self, organism="sce"):
         """docstring."""
-        return round(_CAI(str(self.seq).upper(),
-                     weights=_weights[organism]), 3)
+        return round(_CAI(str(self.seq).upper(), weights=_weights[organism]), 3)
 
     def rarecodons(self, organism="sce"):
         """docstring."""
         rare = _rare_codons[organism]
         s = str(self.seq).upper()
         sfs = []
-        for i in range(0, len(self)//3):
-            x, y = i*3, i*3+3
+        for i in range(0, len(self) // 3):
+            x, y = i * 3, i * 3 + 3
             trip = s[x:y]
             if trip in rare:
-                sfs.append(_SeqFeature(
-                           _FeatureLocation(x, y),
-                           type=f"rare_codon_{organism}",
-                           qualifiers={"label": trip}))
+                sfs.append(
+                    _SeqFeature(
+                        _FeatureLocation(x, y),
+                        type=f"rare_codon_{organism}",
+                        qualifiers={"label": trip},
+                    )
+                )
         return sfs
 
     def startcodon(self, organism="sce"):
@@ -582,37 +576,35 @@ class SeqRecord(_SeqRecord):
 
     def express(self, organism="sce"):
         """docstring."""
-        x = _PrettyTable(["cds", "len", "cai", "gc", "sta", "stp",
-                          "n-end"]+_rare_codons[organism]+["rare"])
+        x = _PrettyTable(
+            ["cds", "len", "cai", "gc", "sta", "stp", "n-end"]
+            + _rare_codons[organism]
+            + ["rare"]
+        )
         val = []
-        val.append(f"{str(self.seq)[:3].upper()}..."
-                   f"{str(self.seq)[-3:].upper()}")
-        val.append(len(self)/3)
+        val.append(f"{str(self.seq)[:3].upper()}..." f"{str(self.seq)[-3:].upper()}")
+        val.append(len(self) / 3)
         val.append(self.cai(organism))
         val.append(self.gc())
         val.append(self.startcodon())
         val.append(self.stopcodon())
         val.append(_n_end[organism].get(_seq3(self[3:6].seq.translate())))
         s = str(self.seq).upper()
-        trps = [s[i*3:i*3+3] for i in range(0, len(s)//3)]
+        trps = [s[i * 3 : i * 3 + 3] for i in range(0, len(s) // 3)]
         tot = 0
         for cdn in _rare_codons[organism]:
             cnt = trps.count(cdn)
             tot += cnt
             val.append(cnt)
-        val.append(round(tot/len(trps),3))
+        val.append(round(tot / len(trps), 3))
         x.add_row(val)
         return x
 
-
-
-
-#  _weights
-# _rare_codons
-#  _start
-# _stop
-# _n_end
-
+    #  _weights
+    # _rare_codons
+    #  _start
+    # _stop
+    # _n_end
 
     def copy(self):
         """docstring."""
@@ -637,8 +629,7 @@ class SeqRecord(_SeqRecord):
     def __eq__(self, other):
         """docstring."""
         try:
-            if (self.seq == other.seq and
-               str(self.__dict__) == str(other.__dict__)):
+            if self.seq == other.seq and str(self.__dict__) == str(other.__dict__):
                 return True
         except AttributeError:
             pass
@@ -650,8 +641,7 @@ class SeqRecord(_SeqRecord):
 
     def __hash__(self):
         """__hash__ must be based on __eq__."""
-        return hash((str(self.seq).lower(),
-                     str(tuple(sorted(self.__dict__.items())))))
+        return hash((str(self.seq).lower(), str(tuple(sorted(self.__dict__.items())))))
 
     def __str__(self):
         """docstring."""
@@ -695,10 +685,11 @@ class SeqRecord(_SeqRecord):
     def dump(self, filename):
         """docstring."""
         from pathlib import Path
+
         pth = Path(filename)
         if not pth.suffix:
             pth = pth.with_suffix(".pickle")
-        with open(pth, 'wb') as f:
+        with open(pth, "wb") as f:
             _pickle.dump(self, f)
         return _pretty_str(pth)
 
@@ -710,7 +701,7 @@ if __name__ == "__main__":
     _os.environ["pydna_cached_funcs"] = ""
     import doctest
 
-    doctest.testmod(verbose=True,
-                    optionflags=(doctest.ELLIPSIS |
-                                 doctest.NORMALIZE_WHITESPACE))
+    doctest.testmod(
+        verbose=True, optionflags=(doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
+    )
     _os.environ["pydna_cached_funcs"] = cached
