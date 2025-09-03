@@ -1,0 +1,420 @@
+## Hackathon Copenhagen 2025
+
+This notebook is an introduction to the pydna package, meant to be used as a starting point for the hackathon.
+
+Click on the link below to open the notebook in Google Colab, so that you can   easily run it locally.
+
+<a target="_blank" href="https://colab.research.google.com/github/pydna-group/pydna/blob/master/docs/notebooks/hackathon_copenhagen_2025.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+
+
+
+
+
+The below cell simply installs the necessary dependencies to run pydna and downloads the files to run the code if you are running in google collab. If you are running this in your computer, you will have to install `pydna` from pip or your favourite package manager, and download the files yourself from [here](https://github.com/pydna-group/pydna/tree/master/docs/notebooks).
+
+
+
+```python
+%%capture
+# Install pydna (only when running on Colab)
+import sys
+if 'google.colab' in sys.modules:
+    %pip install pydna[clipboard,download,express,gel]
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/U49845.fasta"
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/CU329670.gb"
+    !mkdir images/
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/images/snapgene_screenshot.png"
+    !mv snapgene_screenshot.png images/
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/images/snapgene_screenshot2.png"
+    !mv snapgene_screenshot2.png images/
+
+```
+
+## Dseq and Dseqrecord
+
+Pydna contains classes to represent double stranded DNA sequences that can:
+
+* Be linear
+* Be circular
+* Contain overhangs (sticky ends).
+
+These sequences can be used to simulate molecular biology methods such as cloning and PCR. The main classes used to represent sequences are `Dseq` and `Dseqrecord`.
+* `Dseq` represents the sequence only. Think of it as a FASTA file.
+* `Dseqrecord` can contain sequence features and other info such as publication, authors, etc. Think of it as a Genbank file.
+
+The most important aspects are shown below:
+
+
+
+```python
+from pydna.dseq import Dseq
+
+# We initialize a Dseq object with a string of DNA sequence, by default it is linear
+my_dseq = Dseq("ATCG")
+
+# We can specify the circularity of the sequence
+my_circ_dseq = Dseq("ATCG", circular=True)
+
+print("Dseq is printed as a string sequence:")
+print(my_dseq, "", my_circ_dseq, sep="\n")
+print()
+print("The representation also prints the circularity and both strands:")
+print(repr(my_dseq), "", repr(my_circ_dseq), sep="\n")
+
+print()
+print("Circular sequences support circular indexing:", my_circ_dseq[2:1])
+print("Linear sequences return an empty sequence object:", my_dseq[2:1])
+
+
+
+```
+
+    Dseq is printed as a string sequence:
+    ATCG
+    
+    ATCG
+    
+    The representation also prints the circularity and both strands:
+    Dseq(-4)
+    ATCG
+    TAGC
+    
+    Dseq(o4)
+    ATCG
+    TAGC
+    
+    Circular sequences support circular indexing: CGA
+    Linear sequences return an empty sequence object: 
+
+
+A `Dseqrecord` object contains a `Dseq` object and other information such as the sequence name, description, and features.
+
+
+```python
+from pydna.dseqrecord import Dseqrecord
+
+# One way to initialize a Dseqrecord object is to pass a Dseq object
+my_dseqrecord = Dseqrecord(Dseq("TGCAAACAGTAATGATGGATGAC", circular=False))
+
+# Another way is to pass a string of DNA sequence
+my_dseqrecord = Dseqrecord("TGCAAACAGTAATGATGGATGAC", circular=False)
+
+# We can print the Dseqrecord object to see the sequence and other information
+print(my_dseqrecord)
+
+# We can also print the sequence only (it is a Dseq object)
+print()
+print(type(my_dseqrecord.seq), my_dseqrecord.seq)
+
+# We can add features, name it, etc. more on this later.
+
+```
+
+    Dseqrecord
+    circular: False
+    size: 23
+    ID: id
+    Name: name
+    Description: description
+    Number of features: 0
+    /molecule_type=DNA
+    Dseq(-23)
+    TGCAAACAGTAATGATGGATGAC
+    ACGTTTGTCATTACTACCTACTG
+    
+    <class 'pydna.dseq.Dseq'> TGCAAACAGTAATGATGGATGAC
+
+
+
+
+> NOTE: The `Dseq` class is a subclass of biopython's `Seq`, whose documentation can be found [here](https://biopython.org/wiki/Seq). `Dseqrecord` is a subclass of biopython's `SeqRecord`, whose documentation can be found [here](https://biopython.org/wiki/SeqRecord).
+
+## Importing Sequence Files
+
+To import files into pydna is simple. pydna provides the `parse` method to read all DNA sequences in a file into a list. As an input, `parse` can take:
+
+* The path to a file from your computer
+* A python string with the file content.
+
+The following code shows an example of how to use the `parse` function to import a FASTA file.
+
+
+```python
+from pydna.parsers import parse
+
+#Import your file into python using its path
+file_path = "./U49845.fasta"
+files = parse(file_path)
+
+#Show your FASTA file in python
+print(files[0].format("fasta"))
+```
+
+    >lcl|U49845.1_cds_AAA98665.1_1 [protein=TCP1-beta] [frame=3] [protein_id=AAA98665.1] [location=<1..206] [gbkey=CDS]
+    TCCTCCATATACAACGGTATCTCCACCTCAGGTTTAGATCTCAACAACGGAACCATTGCC
+    GACATGAGACAGTTAGGTATCGTCGAGAGTTACAAGCTAAAACGAGCAGTAGTCAGCTCT
+    GCATCTGAAGCCGCTGAAGTTCTACTAAGGGTGGATAACATCATCCGTGCAAGACCAAGA
+    ACCGCCAATAGACAACATATGTAA
+
+
+Note that `parse` returns a `list` object, hence requiring `[0]` to take the first element of the list. When you have a FASTA file that contains multiple sequences, you can index the list accordingly (e.g  `[0]`, `[1]`, ...)
+
+The last line of code uses the `format` method to generate a string representation of the sequence as a FASTA file.
+
+Another example, using a GenBank file ([U49845](https://www.ncbi.nlm.nih.gov/nucleotide/U49845)), is shown below.
+
+
+```python
+from pydna.parsers import parse
+
+file_path = "./CU329670.gb"
+files = parse(file_path)
+
+# Convert the Dseqrecord object into a formatted string in GenBank format
+ase1_locus = files[0]
+print(ase1_locus)
+```
+
+    Dseqrecord
+    circular: False
+    size: 4538
+    ID: CU329670.1
+    Name: CU329670
+    Description: Schizosaccharomyces pombe strain 972h- genome assembly, chromosome: I
+    Database cross-references: BioProject:PRJNA13836, BioSample:SAMEA3138176
+    Number of features: 15
+    /molecule_type=DNA
+    /topology=linear
+    /data_file_division=PLN
+    /date=26-APR-2024
+    /accessions=['CU329670']
+    /sequence_version=1
+    /keywords=['']
+    /source=Schizosaccharomyces pombe (fission yeast)
+    /organism=Schizosaccharomyces pombe
+    /taxonomy=['Eukaryota', 'Fungi', 'Dikarya', 'Ascomycota', 'Taphrinomycotina', 'Schizosaccharomycetes', 'Schizosaccharomycetales', 'Schizosaccharomycetaceae', 'Schizosaccharomyces']
+    /references=[Reference(title='The mitochondrial genome of the fission yeast Schizosaccharomyces pombe: highly homologous introns are inserted at the same position of the otherwise less conserved cox1 genes in Schizosaccharomyces pombe and Aspergillus nidulans', ...), Reference(title='The mitochondrial genome of the fission yeast Schizosaccharomyces pombe. The cytochrome b gene has an intron closely related to the first two introns in the Saccharomyces cerevisiae cox1 gene', ...), Reference(title='The mitochondrial genome of the fission yeast, Schizosaccharomyces pombe. Sequence of the large-subunit ribosomal RNA gene, comparison of potential secondary structure in fungal mitochondrial large-subunit rRNAs and evolutionary considerations', ...), Reference(title='Nucleotide sequence of the gene encoding the small ribosomal RNA in the mitochondrial genome of the fission yeast Schizosaccharomyces pombe', ...), Reference(title='The genome sequence of Schizosaccharomyces pombe', ...), Reference(title='The genome sequence of Schizosaccharomyces pombe', ...), Reference(title='Transcription and RNA-processing in fission yeast mitochondria', ...), Reference(title='Direct Submission', ...), Reference(title='Direct Submission', ...)]
+    /comment=On or before Jan 26, 2012 this sequence version replaced
+    AL672256.4, AL009197.1, AL009227.1, AL021046.4, AL021809.4,
+    AL021813.1, AL021817.2, AL031180.3, AL034486.1, AL034565.1,
+    AL034583.1, AL035064.1, AL035248.2, AL035254.1, AL035439.1,
+    AL096845.1, AL109734.1, AL109738.1, AL109739.1, AL109770.1,
+    AL109820.1, AL109831.1, AL109832.1, AL109951.1, AL109988.1,
+    AL110469.1, AL110509.2, AL117210.1, AL117212.1, AL117213.1,
+    AL117390.1, AL121732.1, AL121741.1, AL121745.2, AL121764.1,
+    AL121765.1, AL121770.1, AL122032.1, AL132667.1, AL132675.1,
+    AL132714.1, AL132769.1, AL132779.2, AL132798.2, AL132828.1,
+    AL132839.1, AL132983.1, AL132984.1, AL133154.2, AL133156.1,
+    AL133157.1, AL133225.2, AL133302.1, AL133357.1, AL133359.1,
+    AL133360.1, AL133361.1, AL133442.1, AL133498.1, AL133521.1,
+    AL133522.1, AL135751.1, AL136078.1, AL136235.1, AL136499.1,
+    AL136521.2, AL136538.1, AL137130.1, AL138666.2, AL138854.1,
+    AL139315.1, AL157734.1, AL157811.1, AL157872.1, AL157917.1,
+    AL157993.1, AL157994.1, AL158056.1, AL159180.1, AL159951.1,
+    AL162531.1, AL162631.1, AL163031.1, AL163071.1, AL163191.2,
+    AL163481.1, AL163529.1, AL353014.1, AL353860.2, AL355012.1,
+    AL355013.1, AL355252.1, AL355452.1, AL355632.1, AL355652.1,
+    AL355653.1, AL356333.1, AL356335.1, AL357232.1, AL358272.1,
+    AL360054.1, AL360094.1, AL390095.1, AL390274.1, AL390814.1,
+    AL391713.1, AL391744.1, AL391746.2, AL391783.1, AL441621.1,
+    AL441624.1, AL512486.1, AL512487.1, AL512491.1, AL512493.1,
+    AL512496.1, AL512549.1, AL512562.1, AL583902.1, AL590562.1,
+    AL590582.1, AL590602.1, AL590605.1, AL590902.2, AL590903.1,
+    AL691401.1, AL691402.1, AL691405.1, Z49811.1, Z50112.1, Z50113.1,
+    Z50142.1, Z50728.2, Z54096.1, Z54142.2, Z54285.2, Z54308.1,
+    Z54328.1, Z54354.1, Z54366.1, Z56276.2, Z64354.1, Z66568.2,
+    Z67757.1, Z67961.2, Z67998.1, Z67999.1, Z68136.2, Z68144.1,
+    Z68166.1, Z68197.2, Z68198.1, Z68887.1, Z69086.1, Z69239.1,
+    Z69240.1, Z69368.1, Z69369.1, Z69380.1, Z69725.1, Z69726.1,
+    Z69727.1, Z69728.1, Z69729.1, Z69730.1, Z69731.1, Z69795.1,
+    Z69796.1, Z69944.1, Z70043.1, Z70690.1, Z70691.1, Z70721.1,
+    Z73099.2, Z73100.2, Z81312.1, Z81317.1, Z94864.1, Z95334.1,
+    Z95395.1, Z95396.2, Z97185.1, Z97208.1, Z97209.1, Z97210.2,
+    Z98056.2, Z98529.1, Z98530.2, Z98531.2, Z98532.1, Z98533.1,
+    Z98559.1, Z98560.1, Z98595.1, Z98596.1, Z98597.1, Z98598.1,
+    Z98600.1, Z98601.1, Z98602.1, Z98603.1, Z98762.1, Z98763.1,
+    Z98849.1, Z98944.1, Z98974.2, Z98975.1, Z98977.4, Z98978.1,
+    Z98979.1, Z98980.1, Z98981.3, Z99091.2, Z99126.1, Z99161.1,
+    Z99162.1, Z99163.2, Z99164.2, Z99165.1, Z99166.1, Z99167.1,
+    Z99168.1, Z99258.1, Z99259.1, Z99260.2, Z99261.1, Z99262.1,
+    Z99292.1, Z99295.1, Z99296.2, Z99531.1, Z99532.2, Z99568.2,
+    Z99753.1.
+    Dseq(-4538)
+    ATCA..ATTG
+    TAGT..TAAC
+
+
+## Importing external sequences
+
+You can use genbank to get sequences from GenBank files. If you need to get sequences from other sources (AddGene, for instance). Let us know and we can help with that.
+
+
+
+```python
+from pydna.genbank import Genbank
+
+# Reading the R. cellulolyticum genome from GenBank
+gb = Genbank("example@example.com")
+genome = gb.nucleotide("CP001348.1")
+
+print(genome)
+```
+
+    Dseqrecord
+    circular: True
+    size: 4068724
+    ID: CP001348.1
+    Name: CP001348
+    Description: Ruminiclostridium cellulolyticum H10 chromosome, complete genome
+    Database cross-references: BioProject:PRJNA17419, BioSample:SAMN00623037
+    Number of features: 7582
+    /molecule_type=DNA
+    /topology=circular
+    /data_file_division=BCT
+    /date=25-AUG-2017
+    /accessions=['CP001348', 'AAVC01000000', 'AAVC01000001-AAVC01000121']
+    /sequence_version=1
+    /keywords=['']
+    /source=Ruminiclostridium cellulolyticum H10
+    /organism=Ruminiclostridium cellulolyticum H10
+    /taxonomy=['Bacteria', 'Bacillati', 'Bacillota', 'Clostridia', 'Eubacteriales', 'Oscillospiraceae', 'Ruminiclostridium']
+    /references=[Reference(title='Complete sequence of Clostridium cellulolyticum H10', ...), Reference(title='Direct Submission', ...)]
+    /comment=URL -- http://www.jgi.doe.gov
+    JGI Project ID: 4002584
+    Source DNA and bacteria available from Jizhong Zhou
+    (jzhou@rccc.ou.edu)
+    Contacts: Jizhong Zhou (jzhou@rccc.ou.edu)
+              David Bruce (microbe@cuba.jgi-psf.org)
+    Annotation done by JGI-ORNL and JGI-PGF
+    Finishing done by JGI-LANL
+    Finished microbial genomes have been curated to close all gaps with
+    greater than 98% coverage of at least two independent clones. Each
+    base pair has a minimum q (quality) value of 30 and the total error
+    rate is less than one per 50000.
+    The JGI and collaborators endorse the principles for the
+    distribution and use of large scale sequencing data adopted by the
+    larger genome sequencing community and urge users of this data to
+    follow them. it is our intention to publish the work of this
+    project in a timely fashion and we welcome collaborative
+    interaction on the project and analysis.
+    (http://www.genome.gov/page.cfm?pageID=10506376).
+    Dseq(o4068724)
+    GTAT..ATAT
+    CATA..TATA
+
+
+## Sequence features
+
+
+
+Some sequence file formats (like Genbank) include features, describing key biological properties of sequence regions. Let's look at our previous example in SnapGene:
+
+<img src="./images/snapgene_screenshot.png" alt="SnapGene screenshot of the U49845 sequence" style="max-width: 600px;">
+
+<br>
+
+<img src="./images/snapgene_screenshot2.png" alt="SnapGene screenshot of the U49845 sequence" style="max-width: 600px;">
+
+These features can also be seen in the Genbank file. For example, the below text in the Genbank file represents the coding sequence (`CDS`) of the `ase1` gene.
+
+Each feature has:
+
+* A type (e.g. `CDS`)
+* A location (e.g. `join(1174..1597,1645..3416)`)
+* Optionally, some qualifiers ( key-value pairs, e.g. `gene="ase1"`). Features can have multiple qualifiers of the same type.
+
+```
+     CDS             join(1174..1597,1645..3416)
+                     /gene="ase1"
+                     /locus_tag="SPOM_SPAPB1A10.09"
+                     /codon_start=1
+                     /product="antiparallel microtubule cross-linking factor
+                     Ase1"
+                     /protein_id="CAC21482.1"
+```
+
+How do these features look like in the `Dseqrecord` object, and how do we access them? Let's go back to our previous example:
+
+
+
+```python
+for feature in ase1_locus.features[5:9]:
+    print(feature)
+
+```
+
+    type: 3'UTR
+    location: [393:676](+)
+    qualifiers:
+        Key: locus_tag, Value: ['SPOM_SPAPB1A10.08']
+    
+    type: gene
+    location: [1000:3538](+)
+    qualifiers:
+        Key: gene, Value: ['ase1']
+        Key: locus_tag, Value: ['SPOM_SPAPB1A10.09']
+    
+    type: 5'UTR
+    location: [1000:1173](+)
+    qualifiers:
+        Key: gene, Value: ['ase1']
+        Key: locus_tag, Value: ['SPOM_SPAPB1A10.09']
+    
+    type: CDS
+    location: join{[1173:1597](+), [1644:3416](+)}
+    qualifiers:
+        Key: codon_start, Value: ['1']
+        Key: gene, Value: ['ase1']
+        Key: locus_tag, Value: ['SPOM_SPAPB1A10.09']
+        Key: product, Value: ['antiparallel microtubule cross-linking factor Ase1']
+        Key: protein_id, Value: ['CAC21482.1']
+        Key: translation, Value: ['MQTVMMDDIQSTDSIAEKDNHSNNESNFTWKAFREQVEKHFSKIERLHQVLGTDGDNSSLFELFTTAMNAQLHEMEQCQKKLEDDCQQRIDSIRFLVSSLKLTDDTSSLKIESPLIQCLNRLSMVEGQYMAQYDQKLSTIKEMYHKLESYCNRLGSPFVLPDFENSFLSDVSDAFTESLRGRINEAEKEIDARLEVINSFEEEILGLWSELGVEPADVPQYEQLLESHTNRPNDVYVTQELIDQLCKQKEVFSAEKEKRSDHLKSIQSEVSNLWNKLQVSPNEQSQFGDSSNINQENISLWETELEKLHQLKKEHLPIFLEDCRQQILQLWDSLFYSEEQRKSFTPMYEDIITEQVLTAHENYIKQLEAEVSANKSFLSLINRYASLIEGKKELEASSNDASRLTQRGRRDPGLLLREEKIRKRLSRELPKVQSLLIPEITAWEERNGRTFLFYDEPLLKICQEATQPKSLYRSASAAANRPKTATTTDSVNRTPSQRGRVAVPSTPSVRSASRAMTSPRTPLPRVKNTQNPSRSISAEPPSATSTANRRHPTANRIDINARLNSASRSRSANMIRQGANGSDSNMSSSPVSGNSNTPFNKFPNSVSRNTHFESKSPHPNYSRTPHETYSKASSKNVPLSPPKQRVVNEHALNIMSEKLQRTNLKEQTPEMDIENSSQNLPFSPMKISPIRASPVKTIPSSPSPTTNIFSAPLNNITNCTPMEDEWGEEGF']
+    
+
+
+
+```python
+# Let's look at the types:
+
+print("feature:", type(ase1_locus.features[8]))
+print("feature.type:", type(ase1_locus.features[8].type))
+print("feature.location:", type(ase1_locus.features[8].location))
+print("feature.qualifiers:", type(ase1_locus.features[8].qualifiers))
+print("feature.qualifiers['gene']:", type(ase1_locus.features[8].qualifiers["gene"]))
+
+```
+
+    feature: <class 'Bio.SeqFeature.SeqFeature'>
+    feature.type: <class 'str'>
+    feature.location: <class 'Bio.SeqFeature.CompoundLocation'>
+    feature.qualifiers: <class 'dict'>
+    feature.qualifiers['gene']: <class 'list'>
+
+
+This information is important if we want to extract the sequence of a specific feature, or filter a subset of features to do something with them.
+
+
+```python
+# Extract the dseqrecord of the locus only
+# Note how we first check if the key 'gene' is in the qualifiers and then check if the value 'ase1' is in the list of qualifiers['gene'], not equal to "ase1"
+
+locus_feature = next(feature for feature in ase1_locus.features if 'gene' in feature.qualifiers and "ase1" in feature.qualifiers['gene'])
+
+# Then we can get a subset of the dseqrecord like this:
+extracted_locus = locus_feature.extract(ase1_locus)
+print("length of extracted_locus:", len(extracted_locus))
+
+## Another example, getting a subset of features representing the 3' UTRs
+utr_features = [feature for feature in ase1_locus.features if feature.type == "3'UTR"]
+print("number of utr_features:", len(utr_features))
+```
+
+    length of extracted_locus: 2538
+    number of utr_features: 3
+
+
+More details on how to work with features in the [Dseq_Features notebook](./Dseq_Features.ipynb).
+
+## Cloning

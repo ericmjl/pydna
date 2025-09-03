@@ -22,7 +22,9 @@ The following code shows an example of how to use the `parse` function to import
 # Install pydna (only when running on Colab)
 import sys
 if 'google.colab' in sys.modules:
-    %pip install pydna
+    %pip install pydna[clipboard,download,express,gel]
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/U49845.fasta"
+    !curl -LO "https://github.com/pydna-group/pydna/raw/master/docs/notebooks/U49845.gb"
 
 ```
 
