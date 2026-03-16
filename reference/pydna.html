@@ -533,7 +533,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shed_ss_dna"><code class="docutils literal notranslate"><span class="pre">Dseq.shed_ss_dna()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.apply_cut"><code class="docutils literal notranslate"><span class="pre">Dseq.apply_cut()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.get_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.get_cutsite_pairs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shift_melt_cutsite"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shift_melt_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite_pairs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.get_parts"><code class="docutils literal notranslate"><span class="pre">Dseq.get_parts()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.join"><code class="docutils literal notranslate"><span class="pre">Dseq.join()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
@@ -736,8 +739,10 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pydna.dseq">pydna.dseq module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes"><code class="docutils literal notranslate"><span class="pre">CircularBytes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.shifted"><code class="docutils literal notranslate"><span class="pre">CircularBytes.shifted()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.cutaround"><code class="docutils literal notranslate"><span class="pre">CircularBytes.cutaround()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.find"><code class="docutils literal notranslate"><span class="pre">CircularBytes.find()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.replace_with"><code class="docutils literal notranslate"><span class="pre">CircularBytes.replace_with()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq"><code class="docutils literal notranslate"><span class="pre">Dseq</span></code></a><ul class="nav section-nav flex-column">
@@ -797,7 +802,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shed_ss_dna"><code class="docutils literal notranslate"><span class="pre">Dseq.shed_ss_dna()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.apply_cut"><code class="docutils literal notranslate"><span class="pre">Dseq.apply_cut()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.get_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.get_cutsite_pairs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shift_melt_cutsite"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shift_melt_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite_pairs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.get_parts"><code class="docutils literal notranslate"><span class="pre">Dseq.get_parts()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.join"><code class="docutils literal notranslate"><span class="pre">Dseq.join()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1157,6 +1165,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pydna.parsers">pydna.parsers module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.extract_from_text"><code class="docutils literal notranslate"><span class="pre">extract_from_text()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.CustomGenBankScanner"><code class="docutils literal notranslate"><span class="pre">CustomGenBankScanner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.CustomGenBankIterator"><code class="docutils literal notranslate"><span class="pre">CustomGenBankIterator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse_genbank"><code class="docutils literal notranslate"><span class="pre">parse_genbank()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.embl_gb_fasta"><code class="docutils literal notranslate"><span class="pre">embl_gb_fasta()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse_primers"><code class="docutils literal notranslate"><span class="pre">parse_primers()</span></code></a></li>
@@ -1365,6 +1376,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.sum_is_sticky"><code class="docutils literal notranslate"><span class="pre">sum_is_sticky()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.limit_iterator"><code class="docutils literal notranslate"><span class="pre">limit_iterator()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.create_location"><code class="docutils literal notranslate"><span class="pre">create_location()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.deduplicate"><code class="docutils literal notranslate"><span class="pre">deduplicate()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -4394,6 +4406,21 @@ returned by the get_cutsites method for restriction enzymes.</p>
 stranded DNA molecules.</p>
 <p>See get_ss_meltsites for melting of single stranded regions from
 molecules.</p>
+<p>Positive overhangs come from watson matches from regex_ds_melt_factory,
+negative overhangs come from crick matches. That gives you a clue of
+where the dsDNA part is located on each side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Watson</span> <span class="n">cut</span> <span class="o">-</span> <span class="n">positive</span> <span class="n">overhang</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+<span class="n">Crick</span> <span class="n">cut</span> <span class="o">-</span> <span class="n">negative</span> <span class="n">overhang</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+
+   <span class="mi">04</span>          <span class="mi">14</span>
+   <span class="o">&gt;&lt;</span>          <span class="o">&gt;&lt;</span>
+<span class="n">sDDD</span>  <span class="n">DDDDDD</span>  <span class="n">DDs</span>
+ <span class="n">DDDssDDDDDDssDD</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&lt;</span></code> denotes the fact that the watson value of the cut represents the
+position between letters, not the index of the letters themselves.</p>
+<p>This information is used in the <cite>shift_melt_cutsite_pairs</cite> method.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pydna.dseq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dseq</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;tagaaptaqgtatg&quot;</span><span class="p">)</span>
@@ -4571,7 +4598,7 @@ molecule.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pydna.all.Dseq.apply_cut">
-<span class="sig-name descname"><span class="pre">apply_cut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.Dseq" title="pydna.dseq.Dseq"><span class="pre">Dseq</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.apply_cut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.apply_cut" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">apply_cut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_overlap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.Dseq" title="pydna.dseq.Dseq"><span class="pre">Dseq</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.apply_cut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.apply_cut" title="Link to this definition">#</a></dt>
 <dd><p>Extracts a subfragment of the sequence between two cuts.</p>
 <p>For more detail see the documentation of get_cutsite_pairs.</p>
 <dl class="field-list simple">
@@ -4675,6 +4702,26 @@ and the right edge of a linear sequence.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pydna.all.Dseq.shift_melt_cutsite">
+<span class="sig-name descname"><span class="pre">shift_melt_cutsite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutsite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.shift_melt_cutsite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.shift_melt_cutsite" title="Link to this definition">#</a></dt>
+<dd><p>Shifts a melt cutsite pair so that it only comprises the dsDNA part.</p>
+<p>See the documentation of get_ds_meltsites for more information.</p>
+<p>For ovhg &gt; 0:</p>
+<blockquote>
+<div><p>xxxxxx &lt;- gap when cut is left?</p>
+</div></blockquote>
+<p>gap when cut is right?-&gt;  xxxxxx</p>
+<p>For ovhg &lt; 0, the opposite happens.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pydna.all.Dseq.shift_melt_cutsite_pairs">
+<span class="sig-name descname"><span class="pre">shift_melt_cutsite_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutsite_pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.List" title="(in Python v3.8)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.List" title="(in Python v3.8)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.shift_melt_cutsite_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.shift_melt_cutsite_pairs" title="Link to this definition">#</a></dt>
+<dd><p>Takes a list of cutsite pairs that will be applied to a sequence with parts with ssDNA, and shifts them
+so that they only comprise the dsDNA part.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pydna.all.Dseq.get_parts">
 <span class="sig-name descname"><span class="pre">get_parts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.get_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.get_parts" title="Link to this definition">#</a></dt>
 <dd><p>Returns a DseqParts instance containing the parts (strings) of a dsDNA
@@ -4766,11 +4813,26 @@ single_watson=’’, single_crick=’’)</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pydna.all.Dseq.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.Dseq.join" title="Link to this definition">#</a></dt>
+<dd><p>Join an iterable of Dseqs with this instance as the separator.</p>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sep</span> <span class="o">=</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joined</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joined</span>
+<span class="go">Dseq(-7)</span>
+<span class="go">GaAaTaC</span>
+<span class="go">CtTtAtG</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.all.read">
-<span class="sig-prename descclassname"><span class="pre">pydna.all.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/readers.html#read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.read" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pydna.all.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/readers.html#read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.read" title="Link to this definition">#</a></dt>
 <dd><p>This function is similar the <a class="reference internal" href="#pydna.all.parse" title="pydna.all.parse"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse()</span></code></a> function but expects one and only
 one sequence or and exception is thrown.</p>
 <dl class="field-list simple">
@@ -4779,6 +4841,8 @@ one sequence or and exception is thrown.</p>
 <li><p><strong>data</strong> (<em>string</em>) – see below</p></li>
 <li><p><strong>ds</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Double stranded or single stranded DNA, if True return
 Dseqrecord objects, else Bio.SeqRecord objects.</p></li>
+<li><p><strong>is_path</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the data is treated as a path to a file. If False, the data is treated as a string (e.g. FASTA file content).
+If None, both are tried.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -4805,7 +4869,7 @@ The usage is similar to the <code class="xref py py-func docutils literal notran
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.all.parse">
-<span class="sig-prename descclassname"><span class="pre">pydna.all.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pydna.dseqrecord.Dseqrecord" title="pydna.dseqrecord.Dseqrecord"><span class="pre">Dseqrecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqRecord.html#Bio.SeqRecord.SeqRecord" title="(in Biopython v1.86)"><span class="pre">SeqRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/parsers.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.parse" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pydna.all.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pydna.dseqrecord.Dseqrecord" title="pydna.dseqrecord.Dseqrecord"><span class="pre">Dseqrecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqRecord.html#Bio.SeqRecord.SeqRecord" title="(in Biopython v1.86)"><span class="pre">SeqRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/parsers.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.all.parse" title="Link to this definition">#</a></dt>
 <dd><p>Return <em>all</em> DNA sequences found in data.</p>
 <p>If no sequences are found, an empty list is returned. This is a greedy
 function, use carefully.</p>
@@ -4829,6 +4893,8 @@ are allowed.</p></li>
 <li><p><strong>ds</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True double stranded <a class="reference internal" href="#pydna.all.Dseqrecord" title="pydna.all.Dseqrecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dseqrecord</span></code></a> objects are returned.
 If False single stranded <code class="xref py py-class docutils literal notranslate"><span class="pre">Bio.SeqRecord</span></code> <a class="footnote-reference brackets" href="#id19" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> objects are
 returned.</p></li>
+<li><p><strong>is_path</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the data is treated as a path to a file. If False, the data is treated as a string (e.g. FASTA file content).
+If None, both are tried.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -5532,7 +5598,7 @@ regions.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.alphabet.regex_ds_melt_factory">
-<span class="sig-prename descclassname"><span class="pre">pydna.alphabet.</span></span><span class="sig-name descname"><span class="pre">regex_ds_melt_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span></span></span><a class="reference internal" href="../_modules/pydna/alphabet.html#regex_ds_melt_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.alphabet.regex_ds_melt_factory" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pydna.alphabet.</span></span><span class="sig-name descname"><span class="pre">regex_ds_melt_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">circular</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span></span></span><a class="reference internal" href="../_modules/pydna/alphabet.html#regex_ds_melt_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.alphabet.regex_ds_melt_factory" title="Link to this definition">#</a></dt>
 <dd><p>A regular expression for finding double-stranded regions flanked by single-stranded DNA
 that can be melted to shed multiple double stranded fragments.</p>
 <p>This function returns a regular expression that finds double-stranded regions
@@ -5548,9 +5614,32 @@ sites leads to separation into multiple double stranded fragments.</p>
 tttCTAAT Taaa</p>
 </dd>
 </dl>
+<p>The name of the capture groups (watson and crick) identifies the ssDNA
+strand on the left side of the dsDNA. For example:</p>
+<dl class="simple">
+<dt>::</dt><dd><dl class="simple">
+<dt>gCtC  CTTCtC  CTg</dt><dd><p>GaGAAGAAGaGAAGA</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The first capture group CtC starts with ssDNA on the watson strand,
+then dsDNA, then ssNDA on the crick strand and the match will be
+<code class="docutils literal notranslate"><span class="pre">{'watson':</span> <span class="pre">b'CtC',</span> <span class="pre">'crick':</span> <span class="pre">None}</span></code>.</p>
+<p>The second capture group CTg starts with ssDNA on the crick strand,
+then dsDNA, then ssNDA on the watson strand and the match will be
+<code class="docutils literal notranslate"><span class="pre">{'watson':</span> <span class="pre">None,</span> <span class="pre">'crick':</span> <span class="pre">b'CTg'}</span></code>.</p>
+<p>This can be slightly confusing if there are no overhangs, for example:</p>
+<dl class="simple">
+<dt>::</dt><dd><p>CtC  CTTCtC  CT
+GaGAAGAAGaGAAGA</p>
+</dd>
+</dl>
+<p>Will give <code class="docutils literal notranslate"><span class="pre">{'watson':</span> <span class="pre">b'CtC',</span> <span class="pre">'crick':</span> <span class="pre">None}</span></code>, because it “could have
+started” with the ssDNA on the watson strand, but not on the crick strand.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pydna.dseq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dseq</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">regex</span> <span class="o">=</span> <span class="n">regex_ds_melt_factory</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regex</span> <span class="o">=</span> <span class="n">regex_ds_melt_factory</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;aaaGFTTAIAttt&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">Dseq(-13)</span>
@@ -5563,14 +5652,17 @@ tttCTAAT Taaa</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Max length of double stranded region flanked by single stranded
-regions.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Max length of double stranded region flanked by single stranded
+regions.</p></li>
+<li><p><strong>circular</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the sequence is circular.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>regular expression object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>TYPE</p>
+<dd class="field-odd"><p>re.Pattern</p>
 </dd>
 </dl>
 </dd></dl>
@@ -8411,6 +8503,12 @@ which can hold more meta data.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></p>
 <p>A circular bytes sequence: indexing and slicing wrap around index 0.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="pydna.dseq.CircularBytes.shifted">
+<span class="sig-name descname"><span class="pre">shifted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.CircularBytes" title="pydna.dseq.CircularBytes"><span class="pre">CircularBytes</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#CircularBytes.shifted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.CircularBytes.shifted" title="Link to this definition">#</a></dt>
+<dd><p>Shift the sequence by the given number of bases.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pydna.dseq.CircularBytes.cutaround">
 <span class="sig-name descname"><span class="pre">cutaround</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#CircularBytes.cutaround"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.CircularBytes.cutaround" title="Link to this definition">#</a></dt>
 <dd><p>Return a circular slice of given length starting at index <cite>start</cite>.
@@ -8427,6 +8525,12 @@ assert s.cutaround(-1, 4) == b”EABC”</p>
 <dd><p>Find a subsequence in the circular sequence, possibly
 wrapping across the origin.
 Returns -1 if not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pydna.dseq.CircularBytes.replace_with">
+<span class="sig-name descname"><span class="pre">replace_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacement</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.CircularBytes" title="pydna.dseq.CircularBytes"><span class="pre">CircularBytes</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#CircularBytes.replace_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.CircularBytes.replace_with" title="Link to this definition">#</a></dt>
+<dd><p>Replace the subsequence between start and end with the replacement.</p>
 </dd></dl>
 
 </dd></dl>
@@ -10259,6 +10363,21 @@ returned by the get_cutsites method for restriction enzymes.</p>
 stranded DNA molecules.</p>
 <p>See get_ss_meltsites for melting of single stranded regions from
 molecules.</p>
+<p>Positive overhangs come from watson matches from regex_ds_melt_factory,
+negative overhangs come from crick matches. That gives you a clue of
+where the dsDNA part is located on each side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Watson</span> <span class="n">cut</span> <span class="o">-</span> <span class="n">positive</span> <span class="n">overhang</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+<span class="n">Crick</span> <span class="n">cut</span> <span class="o">-</span> <span class="n">negative</span> <span class="n">overhang</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+
+   <span class="mi">04</span>          <span class="mi">14</span>
+   <span class="o">&gt;&lt;</span>          <span class="o">&gt;&lt;</span>
+<span class="n">sDDD</span>  <span class="n">DDDDDD</span>  <span class="n">DDs</span>
+ <span class="n">DDDssDDDDDDssDD</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&lt;</span></code> denotes the fact that the watson value of the cut represents the
+position between letters, not the index of the letters themselves.</p>
+<p>This information is used in the <cite>shift_melt_cutsite_pairs</cite> method.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pydna.dseq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dseq</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;tagaaptaqgtatg&quot;</span><span class="p">)</span>
@@ -10436,7 +10555,7 @@ molecule.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pydna.dseq.Dseq.apply_cut">
-<span class="sig-name descname"><span class="pre">apply_cut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.Dseq" title="pydna.dseq.Dseq"><span class="pre">Dseq</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.apply_cut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.apply_cut" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">apply_cut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cut</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_overlap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pydna.dseq.Dseq" title="pydna.dseq.Dseq"><span class="pre">Dseq</span></a></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.apply_cut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.apply_cut" title="Link to this definition">#</a></dt>
 <dd><p>Extracts a subfragment of the sequence between two cuts.</p>
 <p>For more detail see the documentation of get_cutsite_pairs.</p>
 <dl class="field-list simple">
@@ -10540,6 +10659,26 @@ and the right edge of a linear sequence.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pydna.dseq.Dseq.shift_melt_cutsite">
+<span class="sig-name descname"><span class="pre">shift_melt_cutsite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutsite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.shift_melt_cutsite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.shift_melt_cutsite" title="Link to this definition">#</a></dt>
+<dd><p>Shifts a melt cutsite pair so that it only comprises the dsDNA part.</p>
+<p>See the documentation of get_ds_meltsites for more information.</p>
+<p>For ovhg &gt; 0:</p>
+<blockquote>
+<div><p>xxxxxx &lt;- gap when cut is left?</p>
+</div></blockquote>
+<p>gap when cut is right?-&gt;  xxxxxx</p>
+<p>For ovhg &lt; 0, the opposite happens.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pydna.dseq.Dseq.shift_melt_cutsite_pairs">
+<span class="sig-name descname"><span class="pre">shift_melt_cutsite_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutsite_pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.List" title="(in Python v3.8)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.List" title="(in Python v3.8)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AbstractCut</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_cas</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.shift_melt_cutsite_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.shift_melt_cutsite_pairs" title="Link to this definition">#</a></dt>
+<dd><p>Takes a list of cutsite pairs that will be applied to a sequence with parts with ssDNA, and shifts them
+so that they only comprise the dsDNA part.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pydna.dseq.Dseq.get_parts">
 <span class="sig-name descname"><span class="pre">get_parts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.get_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.get_parts" title="Link to this definition">#</a></dt>
 <dd><p>Returns a DseqParts instance containing the parts (strings) of a dsDNA
@@ -10629,6 +10768,21 @@ single_watson=’’, single_crick=’’)</p>
 <dd class="field-odd"><p>namedtuple</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pydna.dseq.Dseq.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/dseq.html#Dseq.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.dseq.Dseq.join" title="Link to this definition">#</a></dt>
+<dd><p>Join an iterable of Dseqs with this instance as the separator.</p>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sep</span> <span class="o">=</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joined</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">),</span> <span class="n">Dseq</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joined</span>
+<span class="go">Dseq(-7)</span>
+<span class="go">GaAaTaC</span>
+<span class="go">CtTtAtG</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -11540,11 +11694,11 @@ the sense (Watson) strand is returned.</p>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id39" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id42">20</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id50">20</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://www.dsimb.inserm.fr/~fuchs/M2BI/AnalSeq/Annexes/Sequences/Accession_Numbers.htm">http://www.dsimb.inserm.fr/~fuchs/M2BI/AnalSeq/Annexes/Sequences/Accession_Numbers.htm</a></p>
 </aside>
 <aside class="footnote brackets" id="id40" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id44">21</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id52">21</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch">http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch</a></p>
 </aside>
 </aside>
@@ -12942,6 +13096,33 @@ a [<cite>PydanticSerializationError</cite>][pydantic_core.PydanticSerializationE
 <dd><p>docstring.</p>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pydna.parsers.CustomGenBankScanner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">CustomGenBankScanner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/parsers.html#CustomGenBankScanner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.CustomGenBankScanner" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://biopython.org/docs/latest/api/Bio.GenBank.Scanner.html#Bio.GenBank.Scanner.GenBankScanner" title="(in Biopython v1.86)"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenBankScanner</span></code></a></p>
+<p>A custom GenBank scanner that parses the LOCUS line and extracts the name, size, molecule_type, topology and date
+from malformed GenBank files.</p>
+<p>For example, the following line:</p>
+<dl class="simple">
+<dt><a href="#id42"><span class="problematic" id="id43">``</span></a><a href="#id44"><span class="problematic" id="id45">`</span></a></dt><dd><p>LOCUS       pKM265       4536 bp    DNA   circular  SYN        21-JUN-2013</p>
+</dd>
+</dl>
+<p><a href="#id46"><span class="problematic" id="id47">``</span></a><a href="#id48"><span class="problematic" id="id49">`</span></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pydna.parsers.CustomGenBankIterator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">CustomGenBankIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/parsers.html#CustomGenBankIterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.CustomGenBankIterator" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqIO.InsdcIO.html#Bio.SeqIO.InsdcIO.GenBankIterator" title="(in Biopython v1.86)"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenBankIterator</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pydna.parsers.parse_genbank">
+<span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_genbank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/io.html#io.StringIO" title="(in Python v3.8)"><span class="pre">StringIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqRecord.html#Bio.SeqRecord.SeqRecord" title="(in Biopython v1.86)"><span class="pre">SeqRecord</span></a></span></span><a class="reference internal" href="../_modules/pydna/parsers.html#parse_genbank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.parse_genbank" title="Link to this definition">#</a></dt>
+<dd><p>Equivalent to SeqIO.read(handle, “genbank”) but with more permissive parsing for the LOCUS line. It also
+removes BASE_COUNT lines that can be misplaced and anyway are not stored in the SeqRecord.annotations.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.parsers.embl_gb_fasta">
 <span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">embl_gb_fasta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/parsers.html#embl_gb_fasta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.embl_gb_fasta" title="Link to this definition">#</a></dt>
@@ -12953,7 +13134,7 @@ annotations[“topology”]</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.parsers.parse">
-<span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pydna.dseqrecord.Dseqrecord" title="pydna.dseqrecord.Dseqrecord"><span class="pre">Dseqrecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqRecord.html#Bio.SeqRecord.SeqRecord" title="(in Biopython v1.86)"><span class="pre">SeqRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/parsers.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.parse" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pydna.parsers.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pydna.dseqrecord.Dseqrecord" title="pydna.dseqrecord.Dseqrecord"><span class="pre">Dseqrecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://biopython.org/docs/latest/api/Bio.SeqRecord.html#Bio.SeqRecord.SeqRecord" title="(in Biopython v1.86)"><span class="pre">SeqRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pydna/parsers.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.parsers.parse" title="Link to this definition">#</a></dt>
 <dd><p>Return <em>all</em> DNA sequences found in data.</p>
 <p>If no sequences are found, an empty list is returned. This is a greedy
 function, use carefully.</p>
@@ -12975,8 +13156,10 @@ are allowed.</p></li>
 </ol>
 </p></li>
 <li><p><strong>ds</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True double stranded <code class="xref py py-class docutils literal notranslate"><span class="pre">Dseqrecord</span></code> objects are returned.
-If False single stranded <code class="xref py py-class docutils literal notranslate"><span class="pre">Bio.SeqRecord</span></code> <a class="footnote-reference brackets" href="#id39" id="id42" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a> objects are
+If False single stranded <code class="xref py py-class docutils literal notranslate"><span class="pre">Bio.SeqRecord</span></code> <a class="footnote-reference brackets" href="#id39" id="id50" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a> objects are
 returned.</p></li>
+<li><p><strong>is_path</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the data is treated as a path to a file. If False, the data is treated as a string (e.g. FASTA file content).
+If None, both are tried.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -12988,8 +13171,8 @@ returned.</p></li>
 </dl>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id43" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id46">22</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id51" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id54">22</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://biopython.org/wiki/SeqRecord">http://biopython.org/wiki/SeqRecord</a></p>
 </aside>
 </aside>
@@ -13575,7 +13758,7 @@ The default is callback.</p></li>
 <p>Provides two functions, read and read_primer.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.readers.read">
-<span class="sig-prename descclassname"><span class="pre">pydna.readers.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/readers.html#read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.readers.read" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pydna.readers.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/readers.html#read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.readers.read" title="Link to this definition">#</a></dt>
 <dd><p>This function is similar the <code class="xref py py-func docutils literal notranslate"><span class="pre">parse()</span></code> function but expects one and only
 one sequence or and exception is thrown.</p>
 <dl class="field-list simple">
@@ -13584,6 +13767,8 @@ one sequence or and exception is thrown.</p>
 <li><p><strong>data</strong> (<em>string</em>) – see below</p></li>
 <li><p><strong>ds</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Double stranded or single stranded DNA, if True return
 Dseqrecord objects, else Bio.SeqRecord objects.</p></li>
+<li><p><strong>is_path</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the data is treated as a path to a file. If False, the data is treated as a string (e.g. FASTA file content).
+If None, both are tried.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -13980,7 +14165,7 @@ as a new Seq object.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pydna.seq.Seq.seguid">
 <span class="sig-name descname"><span class="pre">seguid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pydna/seq.html#Seq.seguid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.seq.Seq.seguid" title="Link to this definition">#</a></dt>
-<dd><p>Url safe SEGUID <a class="footnote-reference brackets" href="#id40" id="id44" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a> for the sequence.</p>
+<dd><p>Url safe SEGUID <a class="footnote-reference brackets" href="#id40" id="id52" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a> for the sequence.</p>
 <p>This checksum is the same as seguid but with base64.urlsafe
 encoding instead of the normal base64. This means that
 the characters + and / are replaced with - and _ so that
@@ -13994,8 +14179,8 @@ the checksum can be part of a URL.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id45" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id48">23</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id53" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id56">23</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://wiki.christophchamp.com/index.php/SEGUID">http://wiki.christophchamp.com/index.php/SEGUID</a></p>
 </aside>
 </aside>
@@ -14474,7 +14659,7 @@ Selenocysteine with T for Threonine, which is biologically meaningless.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pydna.seq.ProteinSeq.seguid">
 <span class="sig-name descname"><span class="pre">seguid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pydna/seq.html#ProteinSeq.seguid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.seq.ProteinSeq.seguid" title="Link to this definition">#</a></dt>
-<dd><p>Url safe SEGUID <a class="footnote-reference brackets" href="#id43" id="id46" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a> for the sequence.</p>
+<dd><p>Url safe SEGUID <a class="footnote-reference brackets" href="#id51" id="id54" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a> for the sequence.</p>
 <p>This checksum is the same as seguid but with base64.urlsafe
 encoding instead of the normal base64. This means that
 the characters + and / are replaced with - and _ so that
@@ -14488,8 +14673,8 @@ the checksum can be part of a URL.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id47" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id50">24</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id55" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id58">24</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://wiki.christophchamp.com/index.php/SEGUID">http://wiki.christophchamp.com/index.php/SEGUID</a></p>
 </aside>
 </aside>
@@ -14571,7 +14756,7 @@ nicer output in the IPython shell.</p>
 <span class="sig-name descname"><span class="pre">isorf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/seqrecord.html#SeqRecord.isorf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.seqrecord.SeqRecord.isorf" title="Link to this definition">#</a></dt>
 <dd><p>Detect if sequence is an open reading frame (orf) in the 5’-3’.</p>
 <p>direction.</p>
-<p>Translation tables are numbers according to the NCBI numbering <a class="footnote-reference brackets" href="#id45" id="id48" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>.</p>
+<p>Translation tables are numbers according to the NCBI numbering <a class="footnote-reference brackets" href="#id53" id="id56" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>table</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Sets the translation table, default is 1 (standard code)</p>
@@ -14598,8 +14783,8 @@ nicer output in the IPython shell.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id49" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id52">25</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id57" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id60">25</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c">http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c</a></p>
 </aside>
 </aside>
@@ -14720,7 +14905,7 @@ the <a class="reference external" href="http://jorgensen.biology.utah.edu/wayned
 <dl class="py method">
 <dt class="sig sig-object py" id="pydna.seqrecord.SeqRecord.seguid">
 <span class="sig-name descname"><span class="pre">seguid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/seqrecord.html#SeqRecord.seguid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.seqrecord.SeqRecord.seguid" title="Link to this definition">#</a></dt>
-<dd><p>Return the url safe SEGUID <a class="footnote-reference brackets" href="#id47" id="id50" role="doc-noteref"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></a> for the sequence.</p>
+<dd><p>Return the url safe SEGUID <a class="footnote-reference brackets" href="#id55" id="id58" role="doc-noteref"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></a> for the sequence.</p>
 <p>This checksum is the same as seguid but with base64.urlsafe
 encoding instead of the normal base 64. This means that
 the characters + and / are replaced with - and _ so that
@@ -14734,7 +14919,7 @@ the checksum can be a part of and URL or a filename.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id51" role="doc-footnote">
+<aside class="footnote brackets" id="id59" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://wiki.christophchamp.com/index.php/SEGUID">http://wiki.christophchamp.com/index.php/SEGUID</a></p>
 </aside>
@@ -14876,7 +15061,7 @@ changed by passing a type as keyword with some other string value.</p>
 <span class="sig-name descname"><span class="pre">isorf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/seqrecord.html#ProteinSeqRecord.isorf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.seqrecord.ProteinSeqRecord.isorf" title="Link to this definition">#</a></dt>
 <dd><p>Detect if sequence is an open reading frame (orf) in the 5’-3’.</p>
 <p>direction.</p>
-<p>Translation tables are numbers according to the NCBI numbering <a class="footnote-reference brackets" href="#id49" id="id52" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>.</p>
+<p>Translation tables are numbers according to the NCBI numbering <a class="footnote-reference brackets" href="#id57" id="id60" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>table</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Sets the translation table, default is 1 (standard code)</p>
@@ -14903,7 +15088,7 @@ changed by passing a type as keyword with some other string value.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id53" role="doc-footnote">
+<aside class="footnote brackets" id="id61" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c">http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c</a></p>
 </aside>
@@ -15449,7 +15634,11 @@ each sequence for sequences that have a linear or circular attribute
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.utils.cuts_overlap">
 <span class="sig-prename descclassname"><span class="pre">pydna.utils.</span></span><span class="sig-name descname"><span class="pre">cuts_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_len</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/utils.html#cuts_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.utils.cuts_overlap" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Return True if two cuts overlap on a circular sequence.</p>
+<p>Uses the standard split approach for circular ranges: wrapping ranges
+(start &gt; end) are split into two linear segments, then all segment
+pairs are checked for overlap.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pydna.utils.location_boundaries">
@@ -15519,6 +15708,18 @@ a circular sequence.</p>
 the location spans the entire sequence (it’s not empty).
 &gt;&gt;&gt; str(create_location(5, 5, 10))
 ‘join{[5:10], [0:5]}’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pydna.utils.deduplicate">
+<span class="sig-prename descclassname"><span class="pre">pydna.utils.</span></span><span class="sig-name descname"><span class="pre">deduplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pydna/utils.html#deduplicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydna.utils.deduplicate" title="Link to this definition">#</a></dt>
+<dd><p>Remove duplicates from an iterable while preserving order.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deduplicate</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="go">[3, 1, 2, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">deduplicate</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="go">[(1, 2), (3, 4)]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -15692,7 +15893,10 @@ the location spans the entire sequence (it’s not empty).
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shed_ss_dna"><code class="docutils literal notranslate"><span class="pre">Dseq.shed_ss_dna()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.apply_cut"><code class="docutils literal notranslate"><span class="pre">Dseq.apply_cut()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.get_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.get_cutsite_pairs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shift_melt_cutsite"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.shift_melt_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite_pairs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.get_parts"><code class="docutils literal notranslate"><span class="pre">Dseq.get_parts()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.Dseq.join"><code class="docutils literal notranslate"><span class="pre">Dseq.join()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.all.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
@@ -15895,8 +16099,10 @@ the location spans the entire sequence (it’s not empty).
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pydna.dseq">pydna.dseq module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes"><code class="docutils literal notranslate"><span class="pre">CircularBytes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.shifted"><code class="docutils literal notranslate"><span class="pre">CircularBytes.shifted()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.cutaround"><code class="docutils literal notranslate"><span class="pre">CircularBytes.cutaround()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.find"><code class="docutils literal notranslate"><span class="pre">CircularBytes.find()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.CircularBytes.replace_with"><code class="docutils literal notranslate"><span class="pre">CircularBytes.replace_with()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq"><code class="docutils literal notranslate"><span class="pre">Dseq</span></code></a><ul class="nav section-nav flex-column">
@@ -15956,7 +16162,10 @@ the location spans the entire sequence (it’s not empty).
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shed_ss_dna"><code class="docutils literal notranslate"><span class="pre">Dseq.shed_ss_dna()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.apply_cut"><code class="docutils literal notranslate"><span class="pre">Dseq.apply_cut()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.get_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.get_cutsite_pairs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shift_melt_cutsite"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.shift_melt_cutsite_pairs"><code class="docutils literal notranslate"><span class="pre">Dseq.shift_melt_cutsite_pairs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.get_parts"><code class="docutils literal notranslate"><span class="pre">Dseq.get_parts()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.dseq.Dseq.join"><code class="docutils literal notranslate"><span class="pre">Dseq.join()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -16316,6 +16525,9 @@ the location spans the entire sequence (it’s not empty).
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pydna.parsers">pydna.parsers module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.extract_from_text"><code class="docutils literal notranslate"><span class="pre">extract_from_text()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.CustomGenBankScanner"><code class="docutils literal notranslate"><span class="pre">CustomGenBankScanner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.CustomGenBankIterator"><code class="docutils literal notranslate"><span class="pre">CustomGenBankIterator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse_genbank"><code class="docutils literal notranslate"><span class="pre">parse_genbank()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.embl_gb_fasta"><code class="docutils literal notranslate"><span class="pre">embl_gb_fasta()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.parsers.parse_primers"><code class="docutils literal notranslate"><span class="pre">parse_primers()</span></code></a></li>
@@ -16524,6 +16736,7 @@ the location spans the entire sequence (it’s not empty).
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.sum_is_sticky"><code class="docutils literal notranslate"><span class="pre">sum_is_sticky()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.limit_iterator"><code class="docutils literal notranslate"><span class="pre">limit_iterator()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.create_location"><code class="docutils literal notranslate"><span class="pre">create_location()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pydna.utils.deduplicate"><code class="docutils literal notranslate"><span class="pre">deduplicate()</span></code></a></li>
 </ul>
 </li>
 </ul>
