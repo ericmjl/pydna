@@ -1205,45 +1205,9 @@ class MiscTests(TestCase):
                 cs.to_dseqrecords()
             self.assertEqual(str(e.exception), "Missing source for sequence 1")
 
-    def test_is_insertion_assembly_source(self):
-        loc = SimpleLocation(0, 3)
-        assembly_source = AssemblySource(
-            input=[
-                AssemblyFragment(
-                    sequence=Dseqrecord("ATGC"),
-                    left_location=loc,
-                    right_location=loc,
-                    reverse_complemented=False,
-                ),
-                AssemblyFragment(
-                    sequence=Dseqrecord("ATGC"),
-                    left_location=loc,
-                    right_location=loc,
-                    reverse_complemented=False,
-                ),
-            ],
-            circular=False,
+    def test_replay_products_error(self):
+        source = AssemblySource(
+            input=[SourceInput(sequence=Dseqrecord("ATGC"))], circular=False
         )
-        self.assertFalse(assembly_source.is_insertion())
-        assembly_source.circular = True
-        self.assertFalse(assembly_source.is_insertion())
-
-        same_seq = Dseqrecord("ATGC")
-        assembly_source = AssemblySource(
-            input=[
-                AssemblyFragment(
-                    sequence=same_seq,
-                    left_location=None,
-                    right_location=loc,
-                    reverse_complemented=False,
-                ),
-                AssemblyFragment(
-                    sequence=same_seq,
-                    left_location=loc,
-                    right_location=None,
-                    reverse_complemented=False,
-                ),
-            ],
-            circular=False,
-        )
-        self.assertTrue(assembly_source.is_insertion())
+        with self.assertRaises(NotImplementedError):
+            source._replay_products()
