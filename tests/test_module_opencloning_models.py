@@ -848,7 +848,7 @@ class ValidateTest(TestCase):
     def test_validate_reverse_complement(self):
         seq = Dseqrecord("ATGCATGC")
         rc = seq.reverse_complement()
-        rc.source = ReverseComplementSource(input=[SourceInput(sequence=seq)])
+        self.assertIsInstance(rc.source, ReverseComplementSource)
         rc.source.validate(rc)
 
     def test_validate_restriction_enzyme_cut(self):
@@ -1159,8 +1159,26 @@ class NormalizeTest(TestCase):
             for inp in copy_ligation_product.source.input:
                 this_id = inp.sequence.id
                 inp.sequence = inp.sequence.reverse_complement()
+                inp.sequence.source = None
                 inp.sequence.id = this_id
             cs_wrong = CloningStrategy.from_dseqrecords([copy_ligation_product])
+            cs_norm = cs_wrong.normalize()
+            cs_norm2 = CloningStrategy.from_dseqrecords(
+                [s.normalize_history() for s in cs_wrong.to_dseqrecords()]
+            )
+            self.assertEqual(cs_norm, cs_norm2)
+            self.assertEqual(cs, cs.normalize())
+            self.assertNotEqual(cs_norm, cs)
+
+            # Same with PCR products, to ensure that it works with primers as well
+            cs = CloningStrategy.from_dseqrecords([pcr_product])
+            copy_pcr_product = copy.deepcopy(pcr_product)
+            inp = copy_pcr_product.source.input[1]
+            this_id = inp.sequence.id
+            inp.sequence = inp.sequence.reverse_complement()
+            inp.sequence.source = None
+            inp.sequence.id = this_id
+            cs_wrong = CloningStrategy.from_dseqrecords([copy_pcr_product])
             cs_norm = cs_wrong.normalize()
             cs_norm2 = CloningStrategy.from_dseqrecords(
                 [s.normalize_history() for s in cs_wrong.to_dseqrecords()]

@@ -1080,7 +1080,6 @@ class ReverseComplementSource(Source):
 
     def _replay_products(self) -> list["Dseqrecord"]:
         out_seq = self.input[0].sequence.reverse_complement()
-        out_seq.source = self
         return [out_seq]
 
 
@@ -1209,7 +1208,9 @@ class CloningStrategy(_BaseCloningStrategy):
         # Build primer lookup
         primer_by_id: dict[int, _PrimerCls] = {}
         for p in self.primers or []:
-            primer_by_id[p.id] = _PrimerCls(p.sequence, name=p.name)
+            primer_obj = _PrimerCls(p.sequence, name=p.name)
+            primer_obj.id = str(p.id)
+            primer_by_id[p.id] = primer_obj
 
         # Build sequence lookup by parsing TextFileSequence genbank content
         seq_by_id: dict[int, Dseqrecord] = {}
