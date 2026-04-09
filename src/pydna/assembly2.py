@@ -213,6 +213,13 @@ def restriction_ligation_overlap(
     #         cuts_x.append(((len(seqx), 0), None))
     #     if not seqy.circular:
     #         cuts_y.append(((0, 0), None))
+
+    # Include edges that are not blunt ends
+    if not seqx.circular and seqx.seq.right_ovhg != 0:
+        cuts_x.append(seqx.seq.get_right_end_as_cutsite())
+    if not seqy.circular and seqy.seq.left_ovhg != 0:
+        cuts_y.append(seqy.seq.get_left_end_as_cutsite())
+
     matches = list()
     for cut_x, cut_y in itertools.product(cuts_x, cuts_y):
         # A blunt end
@@ -2262,12 +2269,12 @@ def restriction_ligation_assembly(
     AATTCaaaGTCGACacctG
     TTAAGtttCAGCTGtggaC
 
-    Note that passing a pre-cut fragment will not work.
+    Note that passing a pre-cut fragment also works.
 
     >>> restriction_products = insert.cut([EcoRI, SalI])
     >>> cut_insert = restriction_products[1]
     >>> restriction_ligation_assembly([backbone, cut_insert], [EcoRI, SalI], circular_only=True)
-    []
+    [Dseqrecord(o22), Dseqrecord(o19)]
 
     It also works with a single fragment, for circularization:
 
