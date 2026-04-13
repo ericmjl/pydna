@@ -812,22 +812,24 @@ class Dseqrecord(SeqRecord):
 
     def __add__(self, other):
         if hasattr(other, "seq") and hasattr(other.seq, "watson"):
+            # other is likely another Dseqrecord with a Dseq object
+            # deepcopy is necessary since we will change other's features
             other = copy.deepcopy(other)
-            other_five_prime = other.seq.five_prime_end()
-            if other_five_prime[0] == "5'":
-                # add other.seq.ovhg
-                for f in other.features:
-                    f.location = f.location + other.seq.ovhg
-            elif other_five_prime[0] == "3'":
-                # subtract other.seq.ovhg (sign change)
-                for f in other.features:
-                    f.location = f.location + (-other.seq.ovhg)
-
-            answer = Dseqrecord(SeqRecord.__add__(self, other))
-            answer.n = min(self.n, other.n)
+            newseq = self.seq + other.seq
+            # offset is the length of the self Dseq object added to the
+            # other Dseq object minus the sum of each length
+            # offset is <= 0
+            offset = len(newseq) - (len(self) + len(other))
+            for f in other.features:
+                # adding an integer to a feature location shifts it.
+                f.location = f.location + offset
         else:
-            answer = Dseqrecord(SeqRecord.__add__(self, Dseqrecord(other)))
-            answer.n = self.n
+            # If other is not a Dseqrecord with a Dseq object, the Dseq class
+            # handles the result of adding for consistency.
+            newseq = self.seq + other
+        answer = Dseqrecord(SeqRecord.__add__(self, other))
+        answer.n = min(self.n, getattr(other, "n", self.n))
+        answer.seq = newseq
         return answer
 
     def __mul__(self, number):
