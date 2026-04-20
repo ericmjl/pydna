@@ -11,7 +11,7 @@ import keyword
 import collections
 import itertools
 from copy import deepcopy
-
+from pydna.types import CutSiteType
 import sys
 import random
 import subprocess
@@ -889,7 +889,7 @@ def create_location(
         return shift_location(SimpleLocation(start, end + lim, strand), 0, lim)
 
 
-def deduplicate(iterable):
+def deduplicate(iterable, hashable=True):
     """Remove duplicates from an iterable while preserving order.
 
     >>> deduplicate([3, 1, 2, 1, 3, 4])
@@ -897,10 +897,27 @@ def deduplicate(iterable):
     >>> deduplicate([(1, 2), (3, 4), (1, 2)])
     [(1, 2), (3, 4)]
     """
-    seen = set()
+    if hashable:
+        seen = set()
+    else:
+        seen = []
     result = []
     for item in iterable:
         if item not in seen:
-            seen.add(item)
+            if hashable:
+                seen.add(item)
+            else:
+                seen.append(item)
             result.append(item)
     return result
+
+
+def cutsite_to_location(cutsite: CutSiteType | None, seq_len: int) -> Location | None:
+    """Convert a cutsite to a location."""
+    if cutsite is None:
+        return None
+    watson, ovhg = cutsite[0]
+    if ovhg < 0:
+        return shift_location(SimpleLocation(watson, watson - ovhg, None), 0, seq_len)
+    else:
+        return shift_location(SimpleLocation(watson - ovhg, watson, None), 0, seq_len)

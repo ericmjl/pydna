@@ -1046,6 +1046,13 @@ def test_restriction_ligation_algorithm():
     assert len(assembly.restriction_ligation_overlap(seqrA, f2, [EcoRI])) == 2
     assert len(assembly.restriction_ligation_overlap(f2, seqrA, [EcoRI])) == 2
 
+    # Partial overlap raises warning
+    with pytest.warns(
+        UserWarning,
+        match="Partial overlaps can return wrong products, see https://github.com/pydna-group/pydna/issues/426",
+    ):
+        assembly.restriction_ligation_overlap(seqrA, f2, [EcoRI], partial=True)
+
 
 def test_pcr_assembly_normal():
 
@@ -1501,8 +1508,6 @@ def test_restriction_ligation_assembly():
         assert len(result_seguids) == len(observed_seguids)
         assert result_seguids == observed_seguids
 
-    # TODO: Check if features are transferred properly
-
     # Partial overlaps -> enzyme with negative overhang
     fragments = [Dseqrecord("GGTCTCCCCAATT"), Dseqrecord("GGTCTCCAACCAA")]
 
@@ -1512,34 +1517,17 @@ def test_restriction_ligation_assembly():
         return assembly.restriction_ligation_overlap(x, y, [BsaI], False)
 
     f = assembly.Assembly(fragments, use_fragment_order=False, algorithm=algo)
-    assert len(f.get_linear_assemblies(only_adjacent_edges=True)) == 0
+    assert len(f.get_linear_assemblies()) == 0
 
     # Allowing partial overlaps
     def algo(x, y, _l):
         return assembly.restriction_ligation_overlap(x, y, [BsaI], partial=True)
 
     f = assembly.Assembly(fragments, algorithm=algo, use_fragment_order=False)
-    assert len(f.get_linear_assemblies(only_adjacent_edges=True)) == 2
-    p1, p2 = f.assemble_linear(only_adjacent_edges=True)
+    assert len(f.get_linear_assemblies()) == 2
+    p1, p2 = f.assemble_linear()
     assert str(p1.seq) == "GGTCTCCCCAACCAA"
     assert str(p2.seq) == "GGTCTCCAACCAATT"
-
-    # Combining both partial and normal overlaps, to ensure that only_adjacent_edges keeps both.
-    # In this case use_all_fragments=2, it should return 2 assemblies for 1 + 2, and
-    fragments = [
-        Dseqrecord("GGTCTCCCCAATT"),
-        Dseqrecord("GGTCTCCAACCAA"),
-        Dseqrecord("GGTCTCCCCAATT"),
-    ]
-    f = assembly.Assembly(
-        fragments, algorithm=algo, use_fragment_order=False, use_all_fragments=False
-    )
-    products = f.assemble_linear(only_adjacent_edges=True)
-    assert len(products) == 6
-    products_seguid = set(p.seq.seguid() for p in products)
-    assert products_seguid == set(
-        [p1.seq.seguid(), p2.seq.seguid(), Dseqrecord("GGTCTCCCCAATT").seguid()]
-    )
 
     # Partial overlaps -> enzyme with positive overhang
     fragments = [Dseqrecord("GACACCAGAGTC"), Dseqrecord("GACTAACGGGTC")]
@@ -1557,19 +1545,26 @@ def test_restriction_ligation_assembly():
 
     # Single fragment assemblies
 
-    f1 = Dseqrecord("aaGAATTCtttGAATTCaa", circular=True)
+    f1 = Dseqrecord("aaGAATTCtccGAATTCaa", circular=True)
     products = assembly.restriction_ligation_assembly([f1], [EcoRI], circular_only=True)
-    assert len(products) == 2
+    assert len(products) == 3
+    assert all(p.circular for p in products)
     assert str(products[0].seq) == "AATTCaaaaG"
-    assert str(products[1].seq) == "AATTCtttG"
+    assert str(products[1].seq) == "AATTCtccG"
+    # Inversion product
+    assert (
+        products[2].seq.seguid() == Dseq("aaGAATTCggaGAATTCaa", circular=True).seguid()
+    )
 
-    f1 = Dseqrecord("aaGAATTCtttGAATTCaa", circular=False)
+    f1 = Dseqrecord("aaGAATTCtccGAATTCaa", circular=False)
     products = assembly.restriction_ligation_assembly(
         [f1], [EcoRI], circular_only=False
     )
-    assert len(products) == 2
-    assert str(products[1].seq) == "aaGAATTCaa"
-    assert str(products[0].seq) == "AATTCtttG"
+    assert len(products) == 3
+    assert products[0].seq == Dseq("AATTCtccG", circular=True)
+    assert products[1].seq == Dseq("aaGAATTCaa")
+    # Inversion product
+    assert products[2].seq == Dseq("aaGAATTCggaGAATTCaa")
 
     # Mixing blunt and normal overhangs
     fragments = [Dseqrecord("aaaGATATCccGAATTCaa"), Dseqrecord("cgcGATATCataGAATTCtta")]
@@ -1578,6 +1573,91 @@ def test_restriction_ligation_assembly():
     )
     assert len(products) == 1
     assert str(products[0].seq) == "ATCccGAATTCtatGAT"
+
+
+def test_restriction_ligation_assembly_partially_digested():
+
+    backbone = Dseqrecord("cccGAATTCaaaGTCGACccc")
+    insert = Dseqrecord("ggGAATTCaggtGTCGACgg")
+    products = assembly.restriction_ligation_assembly(
+        [backbone, insert], [EcoRI, SalI], circular_only=True
+    )
+    restriction_products = insert.cut([EcoRI, SalI])
+    cut_insert = restriction_products[1]
+    products2 = assembly.restriction_ligation_assembly(
+        [backbone, cut_insert], [EcoRI, SalI], circular_only=True
+    )
+    assert len(products) == 1
+    assert products == products2
+
+    # Also in circular
+    backbone = Dseqrecord("cccGAATTCaaaGTCGACccc", circular=True)
+    products_no_precut = assembly.restriction_ligation_assembly(
+        [backbone, insert], [EcoRI, SalI]
+    )
+    assert len(products_no_precut) == 2
+    product_seguids = set(p.seguid() for p in products_no_precut)
+    for shift in range(len(backbone)):
+        backbone_shifted = backbone.shifted(shift)
+        products3 = assembly.restriction_ligation_assembly(
+            [backbone_shifted, cut_insert], [EcoRI, SalI]
+        )
+        assert len(products3) == 2
+        product_seguids3 = set(p.seguid() for p in products3)
+        assert product_seguids3 == product_seguids
+
+
+def test_restriction_ligation_assembly_only_adjacent_edges():
+    ecori_site = "GAATTC"
+    multi_insert = Dseqrecord(f"at{ecori_site}ct{ecori_site}gt{ecori_site}ta")
+    plasmid = Dseqrecord(f"aa{ecori_site}aa", circular=True)
+
+    # This does not give a warning, because it's picked up by only_adjacent_edges=True
+    # this is better because the partial digest is there to mostly to warn about
+    # internal cutsites from Type IIS restriction enzymes that may not produce any edge
+    # see https://github.com/pydna-group/pydna/issues/426
+    products = assembly.restriction_ligation_assembly(
+        [plasmid, multi_insert], [EcoRI], circular_only=True
+    )
+    assert len(products) == 4
+
+    def algo(x, y, _l):
+        return assembly.restriction_ligation_overlap(x, y, [EcoRI])
+
+    asm = assembly.Assembly(
+        [plasmid, multi_insert],
+        None,
+        algorithm=algo,
+        use_fragment_order=False,
+        use_all_fragments=True,
+    )
+    assert len(asm.get_circular_assemblies(only_adjacent_edges=True)) == 4
+    assert len(asm.get_circular_assemblies(only_adjacent_edges=False)) == 6
+
+    # Internal EcoRV cutsite (would not be solved by only_adjacent_edges=True,
+    # because the cutsite is not part of an edge)
+
+    f1 = Dseqrecord("aaGAATTCaaGATATCaaGAATTCaa")
+    f2 = Dseqrecord("cccGAATTCccc", circular=True)
+
+    assert (
+        len(
+            assembly.restriction_ligation_assembly(
+                [f1, f2], [EcoRI], circular_only=True
+            )
+        )
+        == 2
+    )
+
+    with pytest.warns(UserWarning):
+        assert (
+            len(
+                assembly.restriction_ligation_assembly(
+                    [f1, f2], [EcoRI, EcoRV], circular_only=True
+                )
+            )
+            == 0
+        )
 
 
 @pytest.mark.xfail(reason="See https://github.com/pydna-group/pydna/issues/426")
@@ -1592,6 +1672,26 @@ def test_restriction_ligation_partial_overlaps():
     assert len(products) == 2
     assert str(products[0].seq) == "GGTCTCCCCAACCAA"
     assert str(products[1].seq) == "GGTCTCCAACCAATT"
+
+    # Combining both partial and normal overlaps, to ensure that only_adjacent_edges keeps both.
+    # In this case use_all_fragments=2, it should return 2 assemblies for 1 + 2, and
+    def algo(x, y, _l):
+        return assembly.restriction_ligation_overlap(x, y, [BsaI], partial=True)
+
+    fragments = [
+        Dseqrecord("GGTCTCCCCAATT"),
+        Dseqrecord("GGTCTCCAACCAA"),
+        Dseqrecord("GGTCTCCCCAATT"),
+    ]
+    f = assembly.Assembly(
+        fragments, algorithm=algo, use_fragment_order=False, use_all_fragments=False
+    )
+    products = f.assemble_linear(only_adjacent_edges=True)
+    assert len(products) == 6
+    products_seguid = set(p.seq.seguid() for p in products)
+    # assert products_seguid == set(
+    #     [p1.seq.seguid(), p2.seq.seguid(), Dseqrecord("GGTCTCCCCAATT").seguid()]
+    # )
 
 
 def test_only_adjacent_edges():
@@ -2624,6 +2724,25 @@ def test_in_vivo_assembly():
             assert products_str == expected_outputs
 
 
+def test_homologous_recombination_excision_deprecated_alias_warns_and_matches_new_name():
+    homology = "AAGTCCGTTCGTTTTACCTG"
+    genome = Dseqrecord(f"aaaaaa{homology}cccc", name="genome")
+    insert = Dseqrecord(f"{homology}tttt{homology}", name="insert")
+    integrated = assembly.homologous_recombination_integration(genome, [insert], 20)[0]
+
+    with pytest.warns(
+        DeprecationWarning, match="homologous_recombination_excision_or_inversion"
+    ):
+        products_old = assembly.homologous_recombination_excision(integrated, 20)
+    products_new = assembly.homologous_recombination_excision_or_inversion(
+        integrated, 20
+    )
+
+    assert [p.seq.seguid() for p in products_old] == [
+        p.seq.seguid() for p in products_new
+    ]
+
+
 def test_gateway_assembly():
 
     attB1 = "ACAACTTTGTACAAAAAAGCAGAAG"
@@ -2878,3 +2997,35 @@ def test_terminal_overlap():
 def test_terminal_overlap_error():
     with pytest.raises(ValueError):
         assembly.terminal_overlap(Dseqrecord("A"), Dseqrecord("A"), trim_ends="dummy")
+
+
+def test_inversion_homologous_recombination():
+    hom = "ACAACTTTGTACAAAAAAGCAGAAG"
+
+    seq1 = Dseqrecord("ggg" + hom + "cca" + reverse_complement(hom) + "tttt")
+    seq1.add_feature(3, len("ggg" + hom), strand=1, label=["hom1"])
+    seq1.add_feature(
+        len("ggg" + hom + "cca"),
+        len("ggg" + hom + "cca" + hom),
+        strand=-1,
+        label=["hom2"],
+    )
+    seq1.add_feature(
+        len("ggg" + hom), len("ggg" + hom) + 3, strand=1, label=["payload"]
+    )
+
+    prods = assembly.homologous_recombination_excision_or_inversion(seq1, limit=20)
+    expected = (
+        "ggg" + hom + reverse_complement("cca") + reverse_complement(hom) + "tttt"
+    )
+    assert len(prods) == 1
+    assert str(prods[0].seq) == expected
+    payload_feature = next(
+        f for f in prods[0].features if f.qualifiers["label"] == ["payload"]
+    )
+    assert payload_feature.location.strand == -1
+
+    seq1 = seq1.looped()
+    prods = assembly.homologous_recombination_excision_or_inversion(seq1, limit=20)
+    assert len(prods) == 1
+    assert prods[0].seq.seguid() == Dseq(expected, circular=True).seguid()
